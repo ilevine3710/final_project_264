@@ -11,15 +11,6 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-
-/*
-COLORS MARK PICKED NATURE
-#102820 - dark green
-#4C6444 - light green
-#CABA9C - tan
-#8A6240 - light brown
-#4D2D18 - dark brown
-*/
 html {
   color: #222;
   font-size: 1em;
@@ -88,46 +79,22 @@ fieldset {
 textarea {
   resize: vertical;
 }
+/*
+COLORS MARK PICKED NATURE
+#102820 - dark green
+#4C6444 - light green
+#CABA9C - tan
+#8A6240 - light brown
+#4D2D18 - dark brown
+*/
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 body {
-  font-family: "Silkscreen", sans-serif;
-  background-color: #228c9f;
-  color: #363432;
-}
-#container {
-  width: 900px;
-  height: auto;
-  gap: 15px;
-  padding: 20px;
-  display: grid;
-  grid-template-areas:
-    'title'
-    'canvas'
-}
-#container > div {
-  padding: 20px 0;
-}
-
-#canvas{
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: auto;
-  margin-right: auto;
-  background-color: #efdbc2;
-  border: 2px solid #363432;
-  width: 800px;
-  height: 500px;
-  grid-area: canvas;
-}
-#title{
-  font-size: 60px;
-  grid-area: title;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
+  font-family: "Chakra Petch", sans-serif;
+  background-color: #CABA9C;
+  color: #4D2D18;
 }
 /* ==========================================================================
    Helper classes

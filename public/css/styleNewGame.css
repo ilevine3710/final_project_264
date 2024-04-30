@@ -137,6 +137,50 @@
   .redirects:hover {
     background-color: #8A6240; /* Darker shade of button color */
   }
+
+  #gamebar{
+    background-color: #00000000;
+    display: grid;
+    grid-template-areas: 
+    'courseselect',
+    'playersList',
+    'playerselect';
+  }
+  #gamebar > div{
+    margin-left: 10px;
+  }
+  #courseselect{
+    grid-area: courseselect;
+  }
+  #playerList{
+    grid-area: playerList;
+  }
+  #playerselect{
+    grid-area: playerselect;
+  }
+  /* #map{
+    grid-area: map;
+    height: 600px;
+    width: 600px;
+    background-color: #4C6444;
+  } */
+
+  .playertag{
+    background-color: #4D2D18;
+    display: grid;
+    grid-template-areas: 
+    'username remove';
+    margin-right: 10px;
+    margin-right: 10px;
+  }
+  .username{
+    grid-area: username;
+  }
+  .remove{
+    grid-area: remove;
+  }
+  
+
   /* ==========================================================================
      Helper classes
      ========================================================================== */

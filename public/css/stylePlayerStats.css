@@ -96,6 +96,44 @@
     background-color: #CABA9C;
     color: #4D2D18;
   }
+  select {
+    color: #4D2D18;;
+    background-color: #4C6444;
+    border-color: #8A6240;
+    border-width: 2px;
+  }
+  #table {
+
+  }
+  #container {
+    margin: 20px;
+    display: grid;
+    grid-template-areas: 
+      '. statsHeader statsHeader .'
+      '. statsSubheader statsSubheader .'
+      '. playerSelector courseSelector .';
+  }
+  #statsHeader {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    grid-area: statsHeader;
+  }
+  #statsSubheader {
+    grid-area: statsSubheader;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  #playerSelector {
+    text-align: center;
+    grid-area: playerSelector;
+    font-size: 20px;
+  }
+  #courseSelector {
+    text-align: center;
+    grid-area: courseSelector;
+    font-size: 20px;
+  }
   #bar {
     background-color: #4C6444;
     height: 60px;
@@ -120,6 +158,13 @@
     grid-area: Stats;
     width: 150px;
     text-align: center;
+  }
+  #rounds {
+    margin-top: 20px;
+    
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
   }
   .redirects {
       margin-top: 8px;

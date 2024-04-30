@@ -9,10 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^9.6.0",
     "chart.js": "^4.4.2",
     "express": "^4.19.2",
+    "jquery-csv": "^1.0.21",
     "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "tabulator-tables": "^6.2.1"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^12.0.2",

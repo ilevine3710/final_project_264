@@ -99,11 +99,22 @@
   select {
     color: #4D2D18;;
     background-color: #4C6444;
-    border-color: #8A6240;
+    border-color: #4D2D18;
     border-width: 2px;
   }
+  .legend { list-style: none; margin-left: 120px; }
+  .legend li { float: left; margin-right: 10px; }
+  .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  .legend .eagle { background-color: rgb(58, 58, 241); }
+  .legend .birdie { background-color: green; }
+  .legend .par { background-color: black; }
+  .legend .bogie { background-color: red; }
+  .legend .doubleBogie { background-color: purple; }
+  .legend .tripleBogie { background-color: saddlebrown; }
   #table {
-
+    overflow-x: auto !important;
+    width: 1000px !important;
+    max-width: none !important;
   }
   #container {
     margin: 20px;
@@ -161,7 +172,6 @@
   }
   #rounds {
     margin-top: 20px;
-    
     max-width: fit-content;
     margin-left: auto;
     margin-right: auto;

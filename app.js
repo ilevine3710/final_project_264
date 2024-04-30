@@ -5,11 +5,14 @@ const app = express();
 
 
 app.use(express.static(path.resolve(__dirname, "public")));
-app.get('/button1', (req, res) => {
+app.get('/Home', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-app.get('/button2', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/rounds.html'));
+app.get('/New_Game', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/newGame.html'));
+});
+app.get('/Stats', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/playerStats.html'));
 });
 app.listen(3000, () => console.log("Starting up Word Bounce"));

@@ -96,6 +96,47 @@ body {
   background-color: #CABA9C;
   color: #4D2D18;
 }
+#bar {
+  background-color: #4C6444;
+  height: 60px;
+  display: grid;
+  grid-template-areas: 
+    'Home New_Game Stats';
+}
+#bar > a {
+  margin-left: 100px;
+}
+#Home {
+  grid-area: Home;
+  width: 150px;
+  text-align: center;
+} 
+#New_Game {
+  grid-area: New_Game;
+  width: 200px;
+  text-align: center;
+} 
+#Stats {
+  grid-area: Stats;
+  width: 150px;
+  text-align: center;
+}
+.redirects {
+    margin-top: 8px;
+    font-size: 30px;
+    color: #4D2D18;
+    display: inline-block;
+    background-color: #4C6444; /* Button color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Show pointer on hover */
+    height: 45px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+.redirects:hover {
+  background-color: #8A6240; /* Darker shade of button color */
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rounds Display page</title>
   <link rel="stylesheet" href="css/vendor/bootstrap.min.css">
-  <link rel="stylesheet" href="css/styleRounds.css">
+  <link rel="stylesheet" href="css/styleNewGame.css">
   <meta name="description" content="">
 
   <meta property="og:title" content="">
@@ -24,7 +24,13 @@
 </head>
 
 <body>
-  <a href="/button1">button1</a>
-  <a href="/button2">button2</a>
+  <div id = "bar">
+    <a class = "redirects" id = "Home" href="/Home">Home</a>
+    <a class = "redirects" id = "New_Game" href="/New_Game">New Game</a>
+    <a class = "redirects" id = "Stats" href="/Stats">Stats</a>
+  </div>
+  <script src="js/vendor/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="js/vendor/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="js/scriptNewGame.js"></script>
 </body>
 </html>

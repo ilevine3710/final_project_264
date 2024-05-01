@@ -33,10 +33,68 @@ table = new Tabulator("#table", {
         
     ],
 });
-table.rowBackgroundColor = "blue";
+rounds = []
+roundColors = []
+
 $(() => {
     init();
 });
+function init() {
+  $.ajax("/loadPlayers",
+      {
+        type: "GET",
+        processData: true,
+        data: {
+        },
+        dataType: "json",
+        success: function (players) {
+          loadPlayerDropdown(players);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert("Error: " + jqXHR.responseText);
+          alert("Error: " + textStatus);
+          alert("Error: " + errorThrown);
+        }
+      }
+  );
+  $.ajax("/loadCourses",
+      {
+        type: "GET",
+        processData: true,
+        data: {
+        },
+        dataType: "json",
+        success: function (courses) {
+          loadCourseDropdown(courses);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert("Error: " + jqXHR.responseText);
+          alert("Error: " + textStatus);
+          alert("Error: " + errorThrown);
+        }
+      }
+  );
+  $.ajax(
+      "/changeRounds",
+      {
+        type: "GET",
+        processData: true,
+        data: {
+          player: $("#playerSelectorDropdown").val(),
+          course: $("#courseSelectorDropdown").val(),
+        },
+        dataType: "json",
+        success: function (rounds) {
+          changeRounds(rounds);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert("Error: " + jqXHR.responseText);
+          alert("Error: " + textStatus);
+          alert("Error: " + errorThrown);
+        }
+      }
+  );
+}
 $("#playerSelectorDropdown").change(() => {
     $.ajax("/changeRounds",
         {
@@ -81,8 +139,8 @@ $("#courseSelectorDropdown").change(() => {
 
 });
 function changeRounds (rounds) {
-    roundsData = [];
-    colorsArr = [];
+    let roundsData = [];
+    let colorsArr = [];
     rounds.forEach((round, index) => {
         date = round.DATE
         player = round.PLAYER
@@ -102,7 +160,7 @@ function changeRounds (rounds) {
 function loadPlayerDropdown(players) {
     $("#playerSelectorDropdown").append("")
     players.forEach((player, index) => {
-        p = player.PLAYER
+        let p = player.PLAYER
         $("#playerSelectorDropdown").append(`<option value="${p}">${p}</option>`);
     });
 }
@@ -113,76 +171,23 @@ function loadCourseDropdown(courses) {
         $("#courseSelectorDropdown").append(`<option value="${c}">${c}</option>`);
     });
 }
-function init() {
-    $.ajax("/loadPlayers",
-        {
-          type: "GET",
-          processData: true,
-          data: {
-          },
-          dataType: "json",
-          success: function (players) {
-            loadPlayerDropdown(players);
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            alert("Error: " + jqXHR.responseText);
-            alert("Error: " + textStatus);
-            alert("Error: " + errorThrown);
-          }
-        }
-    );
-    $.ajax("/loadCourses",
-        {
-          type: "GET",
-          processData: true,
-          data: {
-          },
-          dataType: "json",
-          success: function (courses) {
-            loadCourseDropdown(courses);
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            alert("Error: " + jqXHR.responseText);
-            alert("Error: " + textStatus);
-            alert("Error: " + errorThrown);
-          }
-        }
-    );
-    $.ajax(
-        "/changeRounds",
-        {
-          type: "GET",
-          processData: true,
-          data: {
-            player: $("#playerSelectorDropdown").val(),
-            course: $("#courseSelectorDropdown").val(),
-          },
-          dataType: "json",
-          success: function (rounds) {
-            changeRounds(rounds);
-          },
-          error: function (jqXHR, textStatus, errorThrown) {
-            alert("Error: " + jqXHR.responseText);
-            alert("Error: " + textStatus);
-            alert("Error: " + errorThrown);
-          }
-        }
-    );
-}
 function makeTable(data, colorsArr) {
-    table.setData([]);
+    rounds = data;
+    roundColors = colorsArr;
     table.setData(data);
+    table.setPageSize(1000);
+    table.setPageSize(7);
     const rows = table.getRows();
     for (let i = 0; i < rows.length; i++) {
         cells = rows[i].getCells();
         for (let j = 4; j < 22; j++) {
-            cells[j].getElement().style.color = colorsArr[i][j-4];
-        }
+            cells[j].getElement().style.color = colorsArr[i][j - 4];
+        } 
     }
 }
 function getColors(round) {
-    colorNums = []
-    colors = []
+    let colorNums = []
+    let colors = []
     colorNums.push(round.SCORE1 - round.PAR1);
     colorNums.push(round.SCORE2 - round.PAR2);
     colorNums.push(round.SCORE3 - round.PAR3);

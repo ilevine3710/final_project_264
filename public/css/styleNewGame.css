@@ -95,8 +95,13 @@
     font-family: "Chakra Petch", sans-serif;
     background-color: #CABA9C;
     color: #4D2D18;
+    display: grid;
+    grid-template-areas: 
+    "bar bar" 
+    "gameSetup map";
   }
   #bar {
+    grid-area: bar;
     background-color: #4C6444;
     height: 60px;
     display: grid;
@@ -137,6 +142,73 @@
   .redirects:hover {
     background-color: #8A6240; /* Darker shade of button color */
   }
+
+  #gameSetup{
+    grid-area: gameSetup;
+    background-color: #00000000;
+    display: grid;
+    grid-template-areas: 
+    'courseselect' 
+    'playersList' 
+    'playerselect';
+    width: 300px;
+    
+  }
+  #gameSetup > div{
+    margin-left: 10px;
+    width: 100%;
+  }
+  #courseselect{
+    grid-area: courseselect;
+  }
+  #gameSetup > * > select{
+    width: 100%;
+  }
+  #playersList{
+    grid-area: playersList;
+    overflow-y: auto;
+    height: 250px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  .playersList::-webkit-scrollbar { /*Chrome, Opera, Safari*/
+    display: none;
+  }
+  #playerselect{
+    grid-area: playerselect;
+  }
+  #map{
+    margin-top: 20px;
+    grid-area: map;
+    border-style: solid;
+    border: #4D2D18;
+    border-width: 1px;
+  }
+
+  .playertag{
+    background-color: #00000000;
+    border-width: 2px;
+    border-style: solid;
+    border-left: #4D2D1800;
+    border-right: #4D2D1800;
+    display: grid;
+    grid-template-areas: 
+    'username remove';
+    width: 80%;
+    margin-left: 10%;
+  }
+  .username{
+    grid-area: username;
+    padding-left: 2px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+  .remove{
+    padding-top: 1px;
+    grid-area: remove;
+  }
+  
+
   /* ==========================================================================
      Helper classes
      ========================================================================== */

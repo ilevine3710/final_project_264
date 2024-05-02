@@ -36,6 +36,7 @@ table = new Tabulator("#table", {
 rounds = []
 roundColors = []
 
+
 $(() => {
     init();
 });
@@ -94,6 +95,10 @@ function init() {
         }
       }
   );
+  makeChart1();
+  makeChart2();
+  makeChart3();
+  makeChart4();
 }
 $("#playerSelectorDropdown").change(() => {
     $.ajax("/changeRounds",
@@ -226,4 +231,88 @@ function getColors(round) {
                 break;
         } colors[i] = color
     } return colors;
+}
+function makeChart1(data) {
+  const ctx1 = document.getElementById('chart1');
+  new Chart(ctx1, {
+      type: 'bar',
+      data: {
+        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+        datasets: [{
+          label: '# of Votes',
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+  });
+}
+function makeChart2(data) {
+  const ctx2 = document.getElementById('chart2');
+  new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+function makeChart3(data) {
+  const ctx3 = document.getElementById('chart3');
+  new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+function makeChart4(data) {
+  const ctx4 = document.getElementById('chart4');
+  new Chart(ctx4, {
+    type: 'bar',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
 }

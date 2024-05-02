@@ -199,6 +199,32 @@
   .redirects:hover {
     background-color: #8A6240; /* Darker shade of button color */
   }
+  #charts{
+    display: grid;
+    grid-template-areas: 
+      'chartBox1 chartBox2'
+      'chartBox3 chartBox4';
+  }
+  #charts > div{
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+    height: 600px;
+    width: 600px;
+  }
+  #chartBox1 {
+    grid-area: chartBox1;
+  }
+  #chartBox2 {
+    grid-area: chartBox2;
+  }
+  #chartBox3 {
+    grid-area: chartBox3;
+  }
+  #chartBox4 {
+    grid-area: chartBox4;
+  }
   /* ==========================================================================
      Helper classes
      ========================================================================== */

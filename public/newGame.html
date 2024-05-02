@@ -29,15 +29,15 @@
     <a class = "redirects" id = "New_Game" href="/New_Game">New Game</a>
     <a class = "redirects" id = "Stats" href="/Stats">Stats</a>
   </div>
-  <div id = "gamebar">
-    <div class="courseselect">
-      <input list="courses">
-      <datalist id="courses">
-        <option value="South Mountain">
-        <option value="Moore">
-      </datalist>
+  <div id ="gameSetup">
+    <div id="courseselect">
+      <label for="courses">Choose a course:</label>
+      <select id="courses" name="courses">
+        <option value="South Mountain">South Mountain</option>
+        <option value="Moore">Moore</option>
+        <option value="other">Other...</option>
+      </select>
     </div>
-    <br>
     <div id="playersList">
       <div class="playertag">
         <div class="username">sample player1</div>
@@ -45,15 +45,91 @@
           <button class="remove">remove</button>
         </div>
       </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">sample player1</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
+      <div class="playertag">
+        <div class="username">a</div>
+        <div class="remove">
+          <button class="remove">remove</button>
+        </div>
+      </div>
     </div>
-    <br>
-    <div class="playerselect">
-      <input list="players">
-      <datalist id="players">
-        <option value="mzs_">
-        <option value="chef_boyardee">
-      </datalist>
-    </div>
+    <div id="playerselect">
+      <label  for="players">Add a player</label>
+      <select id="players" name="players">
+        <option value="mzs_">mzs_</option>
+        <option value="Chef_boyardee">Chef_boyardee</option>
+        <option value="jkdls">jkdls</option>
+      </select>
+    </div>  
+  </div>
+  <div id="map">
+    <iframe src="https://www.google.com/maps/d/u/0/embed?mid=14Egs3xzIrjR-rfE7y-bx5oc50x_xfpc&ehbc=2E312F&noprof=1" width="640" height="480">
+    </iframe>
   </div>
 </body>
   <script src="js/vendor/jquery.min.js" crossorigin="anonymous"></script>

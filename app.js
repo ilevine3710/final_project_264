@@ -51,6 +51,7 @@ function returnRounds(res, player, course, db) {
     res.end(ret)
 }
 function loadPlayers(res) {
+    players = [];
     let arr = db.prepare("SELECT DISTINCT PLAYER FROM mytable");
     for (let i of arr.iterate()) {
         players.push(i);
@@ -59,6 +60,7 @@ function loadPlayers(res) {
     res.end(ret)
 }
 function loadCourses(res) {
+    courses = [];
     let arr = db.prepare("SELECT DISTINCT COURSE FROM mytable");
     for (let i of arr.iterate()) {
         courses.push(i);

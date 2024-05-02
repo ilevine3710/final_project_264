@@ -14,9 +14,11 @@
   <meta property="og:url" content="">
   <meta property="og:image" content="">
 
-  <link rel="icon" href="images/favicon.ico" sizes="any">
-  <link rel="icon" href="images/icon.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="images/icon.png">
+  <link rel="icon" href="/images/icon.png" type="image/x-icon" />
+
+  <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <link rel="manifest" href="site.webmanifest">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Chakra Petch">
@@ -29,6 +31,60 @@
     <a class = "redirects" id = "New_Game" href="/New_Game">New Game</a>
     <a class = "redirects" id = "Stats" href="/Stats">Stats</a>
   </div>
+  <div id = "container">
+    <div id = "statsHeader">
+      Player and Course Statistics
+    </div>
+    <div id = "statsSubheader">
+      Here you can select players and course and see their statistical summaries
+    </div>
+    <div id = "playerSelector">
+      <label for="playerSelectorDropdown">Player: </label>
+      <select name="playerSelectorDropdown" id="playerSelectorDropdown">
+        <option value="all">All Players</option>
+      </select>
+    </div>
+    <div id = "courseSelector">
+      <label for="courseSelectorDropdown">Course: </label>
+      <select name="courseSelectorDropdown" id="courseSelectorDropdown">
+        <option value="all">All Courses</option>
+      </select>
+    </div>
+  </div>
+  <div id = "charts">
+    <div class = "chartBox" id = "chartBox1">
+      <h2>Chart1</h2>
+      <h5>chart1 description</h5>
+      <canvas id = "chart1"></canvas>
+    </div>  
+    <div id = "chartBox2">
+      <h2>Chart2</h2>
+      <h5>chart2 description</h5>
+      <canvas class = "chartBox" id = "chart2"></canvas>
+    </div>  
+    <div id = "chartBox3">
+      <h2>Chart3</h2>
+      <h5>chart3 description</h5>
+      <canvas class = "chartBox" id = "chart3"></canvas>
+    </div>  
+    <div id = "chartBox4">
+      <h2>Chart4</h2>
+      <h5>chart4 description</h5>
+      <canvas class = "chartBox" id = "chart4"></canvas>
+    </div>  
+  </div>
+  <div id = rounds>
+    <div id = "table"></div>
+    <ul class="legend">
+      <li><span class="eagle"></span>Eagle (-2)</li>
+      <li><span class="birdie"></span>Birdie (-1)</li>
+      <li><span class="par"></span>Par (0)</li>
+      <li><span class="bogie"></span>Bogie (+1)</li>
+      <li><span class="doubleBogie"></span>Double Bogie (+2)</li>
+      <li><span class="tripleBogie"></span>Triple Bogie+ (+3≥)</li>
+    </ul>
+  </div>
+  
   <script src="js/vendor/jquery.min.js" crossorigin="anonymous"></script>
   <script src="js/vendor/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
   <script src="js/scriptPlayerStats.js"></script>

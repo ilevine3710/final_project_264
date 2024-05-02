@@ -96,6 +96,62 @@
     background-color: #CABA9C;
     color: #4D2D18;
   }
+  select {
+    color: #4D2D18;;
+    background-color: #4C6444;
+    border-color: #4D2D18;
+    border-width: 2px;
+  }
+  .legend { list-style: none; margin-left: 120px; margin-top: 15px; margin-bottom: 25px;}
+  .legend li { float: left; margin-right: 10px; }
+  .legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+  .legend .eagle { background-color: rgb(58, 58, 241); }
+  .legend .birdie { background-color: green; }
+  .legend .par { background-color: black; }
+  .legend .bogie { background-color: red; }
+  .legend .doubleBogie { background-color: purple; }
+  .legend .tripleBogie { background-color: saddlebrown; }
+  
+  #charts {
+    display: grid;
+    grid-template-areas: 
+      'chart1 chart2'
+      'chart3 chart4';
+  }
+  #table {
+    overflow-x: auto !important;
+    width: 1000px !important;
+    max-width: none !important;
+  }
+  #container {
+    margin: 20px;
+    display: grid;
+    grid-template-areas: 
+      '. statsHeader statsHeader .'
+      '. statsSubheader statsSubheader .'
+      '. playerSelector courseSelector .';
+  }
+  #statsHeader {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    grid-area: statsHeader;
+  }
+  #statsSubheader {
+    grid-area: statsSubheader;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  #playerSelector {
+    text-align: center;
+    grid-area: playerSelector;
+    font-size: 20px;
+  }
+  #courseSelector {
+    text-align: center;
+    grid-area: courseSelector;
+    font-size: 20px;
+  }
   #bar {
     background-color: #4C6444;
     height: 60px;
@@ -121,6 +177,12 @@
     width: 150px;
     text-align: center;
   }
+  #rounds {
+    margin-top: 20px;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
   .redirects {
       margin-top: 8px;
       font-size: 30px;
@@ -136,6 +198,32 @@
   }
   .redirects:hover {
     background-color: #8A6240; /* Darker shade of button color */
+  }
+  #charts{
+    display: grid;
+    grid-template-areas: 
+      'chartBox1 chartBox2'
+      'chartBox3 chartBox4';
+  }
+  #charts > div{
+    padding: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+    height: 600px;
+    width: 600px;
+  }
+  #chartBox1 {
+    grid-area: chartBox1;
+  }
+  #chartBox2 {
+    grid-area: chartBox2;
+  }
+  #chartBox3 {
+    grid-area: chartBox3;
+  }
+  #chartBox4 {
+    grid-area: chartBox4;
   }
   /* ==========================================================================
      Helper classes

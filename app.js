@@ -37,12 +37,8 @@ app.get('/changeRounds', (req, res) => {
 function returnRounds(res, player, course, db) {
     rounds = [];
     let arr = db.prepare("SELECT * FROM mytable WHERE PLAYER LIKE ('%" + player + "%') AND COURSE LIKE ('%" + course + "%')");
-    if (player == "all" && course == "all") {
-        arr = db.prepare("SELECT * FROM mytable");
-    } else if (player == "all") {
+    if (player == "all") {
         arr = db.prepare("SELECT * FROM mytable WHERE COURSE LIKE ('%" + course + "%')");
-    } else if (course == "all") {
-        arr = db.prepare("SELECT * FROM mytable WHERE PLAYER LIKE ('%" + player + "%')");
     }
     for (let i of arr.iterate()) {
         rounds.push(i);

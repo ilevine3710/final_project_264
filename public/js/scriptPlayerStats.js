@@ -2,16 +2,16 @@ table = new Tabulator("#table", {
     layout:"fitData",
     addRowPos:"top",          //when adding a new row, add it to the top of the table
     pagination:"local",       //paginate the data
-    paginationSize:7,         //allow 7 rows per page of data
+    paginationSize:1000,         //allow 7 rows per page of data
     paginationCounter:"rows", //display count of paginated rows in footer
     columnDefaults:{
         tooltip:true,         //show tool tips on cells
     },
     columns:[                 //define the table columns
-        {title:"Date", field:"DATE"},
-        {title:"Player", field:"PLAYER"},
-        {title:"Course", field:"COURSE"},
-        {title:"Total Score", field:"TOTALSCORE"},
+        {title:"Date", field:"DATE", frozen:true},
+        {title:"Player", field:"PLAYER", frozen:true},
+        {title:"Course", field:"COURSE", frozen:true},
+        {title:"Total Score", field:"TOTALSCORE", frozen:true},
         {title:"Hole 1", field:"HOLE1"},
         {title:"Hole 2", field:"HOLE2"},
         {title:"Hole 3", field:"HOLE3"},
@@ -33,21 +33,27 @@ table = new Tabulator("#table", {
         
     ],
 });
-rounds = []
-roundColors = []
+
+var roundsArray = []
+var allPlayers = true;
 const ctx1 = document.getElementById('chart1');
 const ctx2 = document.getElementById('chart2');
 const ctx3 = document.getElementById('chart3');
 const ctx4 = document.getElementById('chart4');
-var chart1 = new Chart(ctx1, null);
-var chart2 = new Chart(ctx2, null);
-var chart3 = new Chart(ctx3, null);
-var chart4 = new Chart(ctx4, null);
+var chart1 = new Chart(ctx1, null); // Bar chart for round scores relative to par
+var chart2 = new Chart(ctx2, null); // Pie chart for average round
+var chart3 = new Chart(ctx3, null); // Bar chart for TODO:
+var chart4 = new Chart(ctx4, null); // Pie chart for specific hole
 
 $(() => {
     init();
 });
 $("#playerSelectorDropdown").change(() => {
+  if ($("#playerSelectorDropdown").val() == "all") {
+    allPlayers = true;
+  } else {
+    allPlayers = false;
+  }
   $.ajax("/changeRounds",
       {
         type: "GET",
@@ -88,10 +94,16 @@ $("#courseSelectorDropdown").change(() => {
         }
       }
   );
-
+});
+$("#holeSelectorDropdown").change(() => {
+  makeChart4();
 });
 function init() {
-  $.ajax("/loadPlayers",
+  for (let i = 1; i <= 18; i++) {
+    $("#holeSelectorDropdown").append(`<option value="${i}">Hole ${i}</option>`);
+  }
+  $.ajax(
+    "/loadPlayers",
       {
         type: "GET",
         processData: true,
@@ -125,33 +137,42 @@ function init() {
         }
       }
   );
-  $.ajax(
-    "/changeRounds",
-    {
-      type: "GET",
-      processData: true,
-      data: {
-        player: $("#playerSelectorDropdown").val(),
-        course: $("#courseSelectorDropdown").val(),
-      },
-      dataType: "json",
-      success: function (rounds) {
-        changeRounds(rounds);
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        alert("Error: " + jqXHR.responseText);
-        alert("Error: " + textStatus);
-        alert("Error: " + errorThrown);
+  const myPromise = new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve('Success!');
+    }, 1000);
+  });
+  myPromise.then((result) => {
+    $.ajax(
+      "/changeRounds",
+      {
+        type: "GET",
+        processData: true,
+        data: {
+          player: 'all',
+          course: 'Covered Bridge Park',
+        },
+        dataType: "json",
+        success: function (rounds) {
+          changeRounds(rounds);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          alert("Error: " + jqXHR.responseText);
+          alert("Error: " + textStatus);
+          alert("Error: " + errorThrown);
+        }
       }
-    }
-  );
+    );
+  }).catch((error) => {
+    console.error(error); // This will be executed if the promise is rejected
+  });
+}
+function changeRounds (rounds) {
+  makeRoundArray(rounds);
   makeChart1();
   makeChart2();
   makeChart3();
   makeChart4();
-}
-function changeRounds (rounds) {
-  makeChart2();
   let roundsData = [];
   let colorsArr = [];
   rounds.forEach((round, index) => {
@@ -168,7 +189,9 @@ function changeRounds (rounds) {
     HOLE7: round.SCORE7, HOLE8: round.SCORE8, HOLE9: round.SCORE9, HOLE10: round.SCORE10, HOLE11: round.SCORE11, HOLE12: round.SCORE12,
     HOLE13: round.SCORE13, HOLE14: round.SCORE14, HOLE15: round.SCORE15, HOLE16: round.SCORE16, HOLE17: round.SCORE17, HOLE18: round.SCORE18})
       colorsArr.push(getColors(round));
-  }); makeTable(roundsData, colorsArr)
+  }); 
+  makeTable(roundsData, colorsArr);
+  
 } 
 function loadPlayerDropdown(players) {
     $("#playerSelectorDropdown").empty();
@@ -186,20 +209,19 @@ function loadCourseDropdown(courses) {
     });
 }
 function makeTable(data, colorsArr) {
-    rounds = data;
-    roundColors = colorsArr;
     table.setData([]);
     table.setData(data);
     table.setPageSize(1000);
+    table.setPageSize(10);
     const rows = table.getRows();
     for (let i = 0; i < rows.length; i++) {
         cells = rows[i].getCells();
         for (let j = 4; j < 22; j++) {
             cells[j].getElement().style.color = colorsArr[i][j - 4];
-
         } 
-    } table.setPageSize(7);
+    } 
 }
+//TODO: FIX COLORS MORON IDIOT
 function getColors(round) {
     let colorNums = []
     let colors = []
@@ -242,9 +264,36 @@ function getColors(round) {
         } colors[i] = color
     } return colors;
 }
-function makeChart1(data) {
+function  makeRoundArray(rounds) {
+  roundsArray = []
+  for(let i = 0; i < rounds.length; i++) {
+    junk = [];
+    junk.push(rounds[i].SCORE1 - rounds[i].PAR1);
+    junk.push(rounds[i].SCORE2 - rounds[i].PAR2);
+    junk.push(rounds[i].SCORE3 - rounds[i].PAR3);
+    junk.push(rounds[i].SCORE4 - rounds[i].PAR4);
+    junk.push(rounds[i].SCORE5 - rounds[i].PAR5);
+    junk.push(rounds[i].SCORE6 - rounds[i].PAR6);
+    junk.push(rounds[i].SCORE7 - rounds[i].PAR7);
+    junk.push(rounds[i].SCORE8 - rounds[i].PAR8);
+    junk.push(rounds[i].SCORE9 - rounds[i].PAR9);
+    junk.push(rounds[i].SCORE10 - rounds[i].PAR10);
+    junk.push(rounds[i].SCORE11 - rounds[i].PAR11);
+    junk.push(rounds[i].SCORE12 - rounds[i].PAR12);
+    junk.push(rounds[i].SCORE13 - rounds[i].PAR13);
+    junk.push(rounds[i].SCORE14 - rounds[i].PAR14);
+    junk.push(rounds[i].SCORE15 - rounds[i].PAR15);
+    junk.push(rounds[i].SCORE16 - rounds[i].PAR16);
+    junk.push(rounds[i].SCORE17 - rounds[i].PAR17);
+    junk.push(rounds[i].SCORE18- rounds[i].PAR18);
+    junk.push(rounds[i].TOTALSCORE - rounds[i].TOTALPAR);
+    console.log(junk);
+    roundsArray.push(junk)
+  };
+}
+function makeChart1() {
   chart1.destroy();
-  new Chart(ctx1, {
+  chart1 = new Chart(ctx1, {
       type: 'bar',
       data: {
         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -263,24 +312,55 @@ function makeChart1(data) {
       }
   });
 }
-function makeChart2(data) {
+function makeChart2() {
+  let data = [0,0,0,0,0,0]
+  roundsArray.forEach((round,index) => {
+    for (let i = 0; i < 18; i++) {
+      switch(round[i]) {
+        case -2:
+          data[0]++;
+          break;
+        case -1:
+          data[1]++;
+          break;
+        case 0:
+          data[2]++;
+          break;
+        case 1:
+          data[3]++;
+          break;
+        case 2:
+          data[4]++;
+          break;
+        default:
+          data[5]++;
+          break;
+      }
+    }
+  });
   chart2.destroy()
   chart2 = new Chart(ctx2, {
     type: 'pie',
     data: {
       labels: [
-        'Red',
-        'Blue',
-        'Yellow'
+        'Eagle',
+        'Birdie',
+        'Par',
+        'Bogie',
+        'Double Bogie',
+        'Triple Bogie+'
       ],
       datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50, 100],
+        data: data,
         backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
+          'DodgerBlue',
+          'MediumSeaGreen',
+          'Gray',
+          'Red',
+          'MediumPurple',
+          'Sienna',
         ],
+        borderColor: '#102820',
         hoverOffset: 4
       }],
     },
@@ -293,9 +373,9 @@ function makeChart2(data) {
     }}
   });
 }
-function makeChart3(data) {
+function makeChart3() {
   chart3.destroy();
-  new Chart(ctx3, {
+  chart3 = new Chart(ctx3, {
     type: 'bar',
     data: {
       labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
@@ -314,24 +394,54 @@ function makeChart3(data) {
     }
   });
 }
-function makeChart4(data) {
+function makeChart4() {
+  let data = [0,0,0,0,0,0]
+  const hole = $("#holeSelectorDropdown").val()
+  roundsArray.forEach((round,index) => {
+    switch(round[hole - 1]) {
+      case -2:
+        data[0]++;
+        break;
+      case -1:
+        data[1]++;
+        break;
+      case 0:
+        data[2]++;
+        break;
+      case 1:
+        data[3]++;
+        break;
+      case 2:
+        data[4]++;
+        break;
+      default:
+          data[5]++;
+        break;
+    }
+  });
   chart4.destroy();
-  new Chart(ctx4, {
+  chart4 = new Chart(ctx4, {
     type: 'pie',
     data: {
       labels: [
-        'Red',
-        'Blue',
-        'Yellow'
+        'Eagle',
+        'Birdie',
+        'Par',
+        'Bogie',
+        'Double Bogie',
+        'Triple Bogie+'
       ],
       datasets: [{
-        label: 'My First Dataset',
-        data: [300, 50, 100],
+        data: data,
         backgroundColor: [
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
+          'DodgerBlue',
+          'MediumSeaGreen',
+          'Gray',
+          'Red',
+          'MediumPurple',
+          'Sienna',
         ],
+        borderColor: '#102820',
         hoverOffset: 4
       }],
     },

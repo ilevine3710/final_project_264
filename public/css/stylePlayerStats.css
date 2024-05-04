@@ -213,8 +213,8 @@
     margin-top: 20px;
     margin-bottom: 20px;
     text-align: center;
-    height: 450px;
-    width: 550px;
+    height: 550px;
+    width: 650px;
   }
   #chartBox1 {
     grid-area: chartBox1;
@@ -227,6 +227,12 @@
   }
   #chartBox4 {
     grid-area: chartBox4;
+  }
+  #holeSelectorDropdown {
+    margin-top: 10px;
+  }
+  .chartBox {
+    display:block;margin:0 auto;
   }
   /* ==========================================================================
      Helper classes

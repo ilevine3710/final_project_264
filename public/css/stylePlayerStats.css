@@ -200,24 +200,36 @@
   .redirects:hover {
     background-color: #8A6240; /* Darker shade of button color */
   }
-  #charts{
+  #charts {
     display: grid;
     grid-template-areas: 
-      'chartBox1 chartBox2'
-      'chartBox3 chartBox4';
+      'chartBox1 chartBox1'
+      'chartBox3 chartBox3'
+      'chartBox2 chartBox4';
   }
   #charts > div{
     padding: 40px;
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center;
-    height: 550px;
-    width: 650px;
+    height: 500px;
+    width: 500px;
   }
+  /* .chartBoxContainer1 {
+    height: 500px;
+    width: 2000px;
+    overflow: auto;
+  }
+  .chartBoxContainer2 {
+    height: 550px;
+    width: 600px;
+  } */
   #chartBox1 {
     grid-area: chartBox1;
+    width: 1400px;
+    height: 500px;
   }
   #chartBox2 {
     grid-area: chartBox2;
@@ -231,8 +243,8 @@
   #holeSelectorDropdown {
     margin-top: 10px;
   }
-  .chartBox {
-    display:block;margin:0 auto;
+  canvas {
+    margin: 0 auto !important;
   }
   /* ==========================================================================
      Helper classes

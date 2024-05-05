@@ -49,35 +49,37 @@
             </select>
         </div>
     </div>
-    <div id = "charts">
-        <div class = "chartBoxContainer1" id = "chartBox1">
-            <h2>Average Scores</h2>
-            <h7>This chart shows the average scores on each hole by the player selected on the course selected</h7>
-            <canvas id = "chart1"></canvas>
-        </div>  
-        <div class = "chartBoxContainer1" id = "chartBox3" >
-            <h2>Total Scores</h2>
-            <h7>This chart shows all the rounds by date by the player selected on the course selected, the line shows the trend of the scores</h7>
-            <canvas class = "chartBox" id = "chart3"></canvas>
-        </div>  
-        <div class = "chartBoxContainer2" id = "chartBox4">
-            <h2>Scores on each Hole</h2>
-            <h7>This chart shows the scores on the selected by the player selected on the course selected</h7>
-            <canvas class = "chartBox" id = "chart4"></canvas>
-            <select name="holeSelectorDropdown" id="holeSelectorDropdown"></select>
-        </div>  
-    </div>
-    <div id = rounds>
-        <div id = "table"></div>
-        <ul class="legend">
-            <li><span class="eagle"></span>Eagle (-2)</li>
-            <li><span class="birdie"></span>Birdie (-1)</li>
-            <li><span class="par"></span>Par (0)</li>
-            <li><span class="bogie"></span>Bogie (+1)</li>
-            <li><span class="doubleBogie"></span>Double Bogie (+2)</li>
-            <li><span class="tripleBogie"></span>Triple Bogie+ (+3≥)</li>
-        </ul>
-    </div>
+    <div id = "scrollable">
+        <div id = "charts">
+            <div class = "chartBoxContainer1" id = "chartBox1">
+                <h2>Average Scores</h2>
+                <h7>This chart shows the average scores on each hole by the player selected on the course selected</h7>
+                <canvas id = "chart1"></canvas>
+            </div>  
+            <div class = "chartBoxContainer1" id = "chartBox3" >
+                <h2>Total Scores</h2>
+                <h7>This chart shows all the rounds by date by the player selected on the course selected, the line shows the trend of the scores</h7>
+                <canvas class = "chartBox" id = "chart3"></canvas>
+            </div>  
+            <div class = "chartBoxContainer2" id = "chartBox4">
+                <h2>Scores on each Hole</h2>
+                <h7>This chart shows the scores on the selected by the player selected on the course selected</h7>
+                <canvas class = "chartBox" id = "chart4"></canvas>
+                <select name="holeSelectorDropdown" id="holeSelectorDropdown"></select>
+            </div>  
+        </div>
+        <div id = rounds>
+            <div id = "table"></div>
+            <ul class="legend">
+                <li><span class="eagle"></span>Eagle (-2)</li>
+                <li><span class="birdie"></span>Birdie (-1)</li>
+                <li><span class="par"></span>Par (0)</li>
+                <li><span class="bogie"></span>Bogie (+1)</li>
+                <li><span class="doubleBogie"></span>Double Bogie (+2)</li>
+                <li><span class="tripleBogie"></span>Triple Bogie+ (+3≥)</li>
+            </ul>
+        </div> 
+    </div> 
     
     <script src="js/vendor/jquery.min.js" crossorigin="anonymous"></script>
     <script src="js/vendor/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

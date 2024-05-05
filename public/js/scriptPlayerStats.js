@@ -1,4 +1,4 @@
-table = new Tabulator("#table", {
+table = new Tabulator("#table", { // Table to store all rounds
     layout:"fitData",
     addRowPos:"top",          //when adding a new row, add it to the top of the table
     pagination:"local",       //paginate the data
@@ -34,17 +34,16 @@ table = new Tabulator("#table", {
     ],
 });
 
-// TODO:table with best performance on each hole
-// TODO: FIX SCALE
+//TODO: FIX COLORS MORON IDIOT
 
-var roundsArray = []
-var parArray = [];
-var scoreArray = [];
-var scoreDateArray = [];
-var allPlayers = true;
+var roundsArray = []; // Array to hold the score vs par of each hole of each round
+var parArray = []; // Array to hold the par of each hole of each round
+var scoreArray = []; // Array to hold the score of each hole of each round
+var scoreDateArray = []; // Array to hold the date vs score of each round
+
 const ctx1 = document.getElementById('chart1');
-const ctx3 = document.getElementById('chart3');
-const ctx4 = document.getElementById('chart4');
+const ctx2 = document.getElementById('chart3');
+const ctx3 = document.getElementById('chart4');
 const clearLine = {
     type: 'line',
     yMin: 4,
@@ -116,7 +115,7 @@ var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
         }
     }
 }); 
-var chart3 = new Chart(ctx3, { // Bar chart for scores through time
+var chart2 = new Chart(ctx2, { // Scatter chart for scores through time
     type: 'scatter',
     data: {
         
@@ -157,7 +156,7 @@ var chart3 = new Chart(ctx3, { // Bar chart for scores through time
         }
     }
 });
-var chart4 = new Chart(ctx4, {// Pie chart for specific hole and all holes
+var chart3 = new Chart(ctx3, {// Pie chart for specific hole and all holes
     type: 'pie',
     data: {
         labels: [
@@ -193,16 +192,11 @@ options: {
     }}
 }); 
 
-
 $(() => {
     init();
 });
-$("#playerSelectorDropdown").change(() => {
-  if ($("#playerSelectorDropdown").val() == "all") {
-    allPlayers = true;
-  } else {
-    allPlayers = false;
-  }
+// When player selector changes, function gets rounds from app with new parameters
+$("#playerSelectorDropdown").change(() => { 
   $.ajax("/changeRounds",
     {
         type: "GET",
@@ -222,6 +216,7 @@ $("#playerSelectorDropdown").change(() => {
         }
     });
 });
+// When course selector changes, function gets rounds from app with new parameters
 $("#courseSelectorDropdown").change(() => {
     $.ajax("/changeRounds",
     {
@@ -242,9 +237,16 @@ $("#courseSelectorDropdown").change(() => {
         }
     });
 });
+// When course selector changes, function remakes chart 3
 $("#holeSelectorDropdown").change(() => {
-    makeChart4();
+    makeChart3();
 });
+/* init() function:
+    * Initializes hole dropdown
+    * Loads players from app into dropdown
+    * Loads courses from app into dropdown
+    * Loads rounds from app
+ */
 function init() {
     $("#holeSelectorDropdown").empty();
     $("#holeSelectorDropdown").append(`<option value="all">All Holes</option>`);
@@ -314,12 +316,17 @@ function init() {
   }).catch((error) => {
   });
 }
+/* changeRounds(rounds) function:
+    * Makes arrays from "rounds" json data
+    * Makes the three charts from this data
+    * Assigns colors to each hole to indicate score related to par
+    * Displays these colors on table
+ */
 function changeRounds (rounds) {
     makeRoundArray(rounds);
     makeChart1();
     makeChart2();
     makeChart3();
-    makeChart4();
     let roundsData = [];
     let colorsArr = [];
     rounds.forEach((round, index) => {
@@ -339,6 +346,10 @@ function changeRounds (rounds) {
     }); 
     makeTable(roundsData, colorsArr);
 } 
+/* loadPlayerDropdown(players) function:
+    * Add "All players" option into players dropdown
+    * Loads the array "players" into players dropdown
+ */
 function loadPlayerDropdown(players) {
     $("#playerSelectorDropdown").empty();
     $("#playerSelectorDropdown").append(`<option value="all">All Players</option>`);
@@ -347,6 +358,9 @@ function loadPlayerDropdown(players) {
         $("#playerSelectorDropdown").append(`<option value="${p}">${p}</option>`);
     });
 }
+/* loadCourseDropdown(courses) function:
+    * Loads the array "courses" into course dropdown
+ */
 function loadCourseDropdown(courses) {
     $("#courseSelectorDropdown").empty();
     courses.forEach((course, index) => {
@@ -354,11 +368,15 @@ function loadCourseDropdown(courses) {
         $("#courseSelectorDropdown").append(`<option value="${c}">${c}</option>`);
     });
 }
+/* makeTable(data, colorsArr) function:
+    * Sets the data of the table to "data"
+    * Sets the colors of each cell to the corresponding color
+ */
 function makeTable(data, colorsArr) {
     table.setData([]);
     table.setData(data);
     table.setPageSize(1000);
-    table.setPageSize(10);
+    table.setPageSize(7);
     const rows = table.getRows();
     for (let i = 0; i < rows.length; i++) {
         cells = rows[i].getCells();
@@ -367,7 +385,9 @@ function makeTable(data, colorsArr) {
         } 
     } 
 }
-//TODO: FIX COLORS MORON IDIOT
+/* getColors(round) function:
+    * Computes the correct color for each hole of each rounds based on its score vs par
+ */
 function getColors(round) {
     let colorNums = []
     let colors = []
@@ -410,6 +430,9 @@ function getColors(round) {
         } colors[i] = color
     } return colors;
 }
+/* makeRoundArray(rounds) function:
+    * Remakes roundsArray, parArray, scoreArray, and scoreDateArray from "rounds"
+ */
 function makeRoundArray(rounds) {
     roundsArray = [];
     parArray = [];
@@ -484,6 +507,9 @@ function makeRoundArray(rounds) {
     parArray.push(rounds[0].PAR18);
     parArray.push(rounds[0].PARTOTAL);
 }
+/* makeChart1() function:
+    * Remakes chart1 with new scoreArray and parArray
+ */
 function makeChart1() {
     parColors = [];
     parBorders = [];
@@ -525,34 +551,10 @@ function makeChart1() {
     addBorders(chart1, parColors, parBorders);
     addData(chart1, data);
 }
+/* makeChart2() function:
+    * Remakes chart2 with new scoreDateArray
+ */
 function makeChart2() {
-    let data = [0,0,0,0,0,0]
-    roundsArray.forEach((round,index) => {
-        for (let i = 0; i < 18; i++) {
-            switch(round[i]) {
-                case -2:
-                    data[0]++;
-                    break;
-                case -1:
-                    data[1]++;
-                    break;
-                case 0:
-                    data[2]++;
-                    break;
-                case 1:
-                    data[3]++;
-                    break;
-                case 2:
-                    data[4]++;
-                    break;
-                default:
-                    data[5]++;
-                    break;
-            }
-        }
-    });
-}
-function makeChart3() {
     let data = [];
     let minTime = convertDate(scoreDateArray[0][0]);
     let maxTime = convertDate(scoreDateArray[0][0]);
@@ -565,10 +567,13 @@ function makeChart3() {
         }
     }); 
     console.log(minTime);
-    addData(chart3, data);
-    fixAxes(chart3, subMonth(minTime), addMonth(maxTime));
+    addData(chart2, data);
+    fixAxes(chart2, subMonth(minTime), addMonth(maxTime));
 }
-function makeChart4() {
+/* makeChart3() function:
+    * Remakes chart3 with new roundsArray
+ */
+function makeChart3() {
     let data = [0,0,0,0,0,0]
     const hole = $("#holeSelectorDropdown").val()
     if (hole == "all") {
@@ -620,24 +625,37 @@ function makeChart4() {
             }
         });
     }
-    addData(chart4, data);
+    addData(chart3, data);
 }
+/* addData(chart, newData) function:
+    * Changes data of "chart" to "newData"
+ */
 function addData(chart, newData) {
     chart.data.datasets.forEach((dataset) => {
         dataset.data = newData;
     });
     chart.update();
 }
+/* addBorders(chart, parColors, parBorders) function:
+    * Changes backgroundColor of "chart" to "parColors"
+    * Changes borderColor of "chart" to "parBorders"
+ */
 function addBorders(chart, parColors, parBorders) {
     chart.data.datasets.forEach((dataset) => {
         dataset.backgroundColor = parColors;
         dataset.borderColor = parBorders;
     });
 }
+/* convertDate (date) function:
+    * Converts mm/dd/yyyy to yyyy-mm-dd
+ */
 function convertDate (date) {
     var parts = date.split('/');
     return parts[2] + '-' + parts[0] + '-' + parts[1];
 }
+/* addMonth (date) function:
+    * Returns string of date that is one month after "date"
+ */
 function addMonth (date) {
     var parts = date.split('-');
     let month = parseInt(parts[1]);
@@ -654,6 +672,9 @@ function addMonth (date) {
     }
     return year + "-" + month + "-" + day;
 } 
+/* subMonth (date) function:
+    * Returns string of date that is one month before "date"
+ */
 function subMonth (date) {
     var parts = date.split('-');
     let month = parseInt(parts[1]);
@@ -671,6 +692,9 @@ function subMonth (date) {
     }
     return year + "-" + month + "-" + day;
 }
+/* fixAxes(chart, minTime, maxTime) function:
+    * Sets min and max of x axis of "chart" to "minTime" and "maxTime"
+ */
 function fixAxes(chart, minTime, maxTime) {
     chart.options.scales.x.min = minTime;
     chart.options.scales.x.max = maxTime; 

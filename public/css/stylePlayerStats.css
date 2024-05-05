@@ -184,6 +184,10 @@
     margin-right: auto;
     margin-top: 100px;
   }
+  #scrollable {
+    height: 600px;
+    overflow-y:auto 
+  }
   .redirects {
       margin-top: 8px;
       font-size: 30px;
@@ -215,7 +219,7 @@
     margin-bottom: 10px;
     text-align: center;
     width: auto;
-    height: 600px;
+    height: 500px;
   }
   #chartBox1 {
     grid-area: chartBox1;
@@ -225,9 +229,6 @@
   }
   #chartBox4 {
     grid-area: chartBox4;
-  }
-  #holeSelectorDropdown {
-    margin-top: 10px;
   }
   canvas {
     margin: 0 auto;
@@ -241,8 +242,8 @@
     height: 500px;
   }
   #chart4 {
-    width: 700px;
-    height: 300px;
+    width: 300px;
+    height: 200px;
   }
   /* ==========================================================================
      Helper classes

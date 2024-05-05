@@ -1,0 +1,147 @@
+/*! HTML5 Boilerplate v9.0.0-RC1 | MIT License | https://html5boilerplate.com/ */
+
+/* main.css 3.0.0 | MIT License | https://github.com/h5bp/main.css#readme */
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+   html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+  }
+  
+  /*
+   * Remove text-shadow in selection highlight:
+   * https://twitter.com/miketaylr/status/12228805301
+   *
+   * Customize the background color to match your design.
+   */
+  
+  ::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+  }
+  
+  ::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+  }
+  
+  /*
+   * A better looking default horizontal rule
+   */
+  
+  hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
+  
+  /*
+   * Remove the gap between audio, canvas, iframes,
+   * images, videos and the bottom of their containers:
+   * https://github.com/h5bp/html5-boilerplate/issues/440
+   */
+  
+  audio,
+  canvas,
+  iframe,
+  img,
+  svg,
+  video {
+    vertical-align: middle;
+  }
+  
+  /*
+   * Remove default fieldset styles.
+   */
+  
+  fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /*
+   * Allow only vertical resizing of textareas.
+   */
+  
+  textarea {
+    resize: vertical;
+  }
+  /*
+  COLORS MARK PICKED NATURE
+  #102820 - dark green
+  #4C6444 - light green
+  #CABA9C - tan
+  #8A6240 - light brown
+  #4D2D18 - dark brown
+  */
+
+
+   /* ==========================================================================
+     Author's custom styles
+     ========================================================================== */
+body {
+    font-family: "Chakra Petch", sans-serif;
+    background-color: #CABA9C;
+    color: #4D2D18;
+    display: grid;
+    grid-template-areas: 
+    "bar bar" 
+    "gameSetup map"
+    "nav map";
+}
+#bar {
+    grid-area: bar;
+    background-color: #4C6444;
+    height: 60px;
+    display: grid;
+    grid-template-areas: 
+        'Home New_Game Stats';
+}
+#bar > a {
+    margin-left: 100px;
+}
+#Home {
+    grid-area: Home;
+    width: 150px;
+    text-align: center;
+} 
+#New_Game {
+    grid-area: New_Game;
+    width: 200px;
+    text-align: center;
+} 
+#Stats {
+    grid-area: Stats;
+    width: 150px;
+    text-align: center;
+}
+.redirects {
+    margin-top: 8px;
+    font-size: 30px;
+    color: #4D2D18;
+    display: inline-block;
+    background-color: #4C6444; /* Button color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Show pointer on hover */
+    height: 45px;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+.redirects:hover {
+background-color: #8A6240; /* Darker shade of button color */
+}
+    

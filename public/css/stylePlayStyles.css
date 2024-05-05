@@ -186,4 +186,14 @@ background-color: #8A6240; /* Darker shade of button color */
     display: none;
   }
 
+#holeNav{
+    width: 250px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#holeNav > div{
+    font-size: 30px;
+}
+
     

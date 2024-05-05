@@ -144,4 +144,46 @@ body {
 .redirects:hover {
 background-color: #8A6240; /* Darker shade of button color */
 }
+
+.holeScore {
+    /* display: inline-block;
+    position: relative; */
+    width: 70px;
+    height: 50px;
+    font-size: 18px; /* adjust as needed */
+    text-align: center; /* center-align the number */
+    padding-right: 40px; /* adjust as needed to make space for the buttons */
+    margin-bottom: 10px;
+}
+  
+.holeScore::-webkit-inner-spin-button,
+.holeScore::-webkit-outer-spin-button {
+  /* -webkit-appearance: none; */
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40%; 
+  height: 100%;
+  background-color: #ccc; 
+  cursor: pointer; 
+}
+
+#holeScores{
+    width: 250px;
+    height: 325px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align items to the right */
+    margin-right: 10px;
+    border: #4D2D18;
+    border-width: 2px;
+    border-style: solid;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  #holeScores::-webkit-scrollbar { /*Chrome, Opera, Safari*/
+    display: none;
+  }
+
     

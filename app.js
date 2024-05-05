@@ -109,5 +109,17 @@ app.get('/loadPlayState', (req, res) => {
     res.end(JSON.stringify(PlayState));
 });
 
-
-
+app.get('/loadCourseInfo', (req,res)=>{
+    let rounds = [];
+    let arr = db.prepare("SELECT * FROM mytable WHERE COURSE LIKE ('%" + req.query.course + "%')");
+    for (let i of arr.iterate()) {
+        rounds.push(i);
+    }
+    pars = [];
+    for (let i = 1; i < 19; i++) {
+        let k = "PAR" + i;
+        pars.push(rounds[0][k]);
+        
+    }
+    res.end(JSON.stringify(pars));
+});

@@ -9,7 +9,7 @@ $("#courses").change(function() {
 });
 
 readyPlayers = [];
-potential_players = ["choose a player...", "Mzs_", "Chef_boyardee", "jkdls", "agressive_beef"];
+potential_players = ["choose a player..."];
 
 
 function populate() {
@@ -66,7 +66,29 @@ $("#newButton").click(function(){
     populate();
 });
 
+function initPlayers() {
+    $.ajax(
+        "/loadPlayers",
+        {
+          type: "GET",
+          processData: true,
+          dataType: "json",
+          success: function (players) {
+            for (let i = 0; i < players.length; i++) {
+                potential_players.push(players[i].PLAYER);
+            }
+            populate();
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error: " + jqXHR.responseText);
+            alert("Error: " + textStatus);
+            alert("Error: " + errorThrown);
+          }
+        }
+    );
+}
+
 
 $(()=>{
-    populate();
+    initPlayers();
 });

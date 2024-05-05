@@ -13,6 +13,7 @@ app.get('/New_Game', (req, res) => {
 app.get('/Stats', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/playerStats.html'));
 });
+//Frisbee Golf App === Frolf app === Frapp
 welcome = `
 
               _                            _          _   _                
@@ -81,14 +82,32 @@ function loadCourses(res) {
 }
 
 
-
-
 //        __  __            _    _        ____            _   _             _ 
 //       |  \/  | __ _ _ __| | _( )___   / ___|  ___  ___| |_(_) ___  _ __ | |
 //       | |\/| |/ _` | '__| |/ /// __|  \___ \ / _ \/ __| __| |/ _ \| '_ \| |
 //       | |  | | (_| | |  |   <  \__ \   ___) |  __/ (__| |_| | (_) | | | |_|
 //       |_|  |_|\__,_|_|  |_|\_\ |___/  |____/ \___|\___|\__|_|\___/|_| |_(_)
 
+
+//will store state of the game for now this is in format
+// { course: 'Moore', people: [ 'Mark Latvakoski', 'Isaac Levine' ] }
+let PlayState = ``;
+
+//sets the play state with incoming data from users selections in /New_Game page
+app.get('/setPlayState', (req, res) => {
+    PlayState = req.query;
+    res.end(JSON.stringify(PlayState));
+})
+
+//send play page
+app.get('/Play', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public/play.html'));
+});
+
+// sends the state to the /play page to load user selection in /New_game
+app.get('/loadPlayState', (req, res) => {
+    res.end(JSON.stringify(PlayState));
+});
 
 
 

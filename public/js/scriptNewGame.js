@@ -27,9 +27,6 @@ function populate() {
     }
     $("#players").html(potentialHtml);
     console.log(readyPlayers);
-    console.log(potential_players);
-
-
 }
 
 $("#players").change(function() {
@@ -42,6 +39,33 @@ $("#players").change(function() {
     }
     populate();
 });
+
+addToDatabase = [];
+
+$("#newButton").click(function(){
+    newPlayerName = $("#pname").val();
+    $("#pname").val("");
+    needAddToDatabase = true;
+    if(newPlayerName === ""){
+        return;
+    }
+    for (let i = 0; i < readyPlayers.length; i++) {
+        if(newPlayerName === readyPlayers[i]){
+            return;
+        }
+    }
+    for (let i = 0; i < potential_players.length; i++) {
+        if(newPlayerName === potential_players[i]){
+            needAddToDatabase = false;
+        }
+    }
+    if(needAddToDatabase){
+        addToDatabase.push(newPlayerName);
+    }
+    readyPlayers.push(newPlayerName);
+    populate();
+});
+
 
 $(()=>{
     populate();

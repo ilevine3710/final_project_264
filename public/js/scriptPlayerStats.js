@@ -40,11 +40,27 @@ table = new Tabulator("#table", {
 var roundsArray = []
 var parArray = [];
 var scoreArray = [];
+var scoreDateArray = [];
 var allPlayers = true;
 const ctx1 = document.getElementById('chart1');
 const ctx2 = document.getElementById('chart2');
 const ctx3 = document.getElementById('chart3');
 const ctx4 = document.getElementById('chart4');
+var data = [
+    { x: '01/01/2023', y: 10 },
+    { x: '03/15/2023', y: 20 },
+    { x: '05/20/2023', y: 15 },
+    // Add more data points here...
+    { x: '04/01/2024', y: 25 },
+    { x: '05/01/2024', y: 30 }
+]
+data.forEach(function(point) {
+    point.x = new Date(point.x);
+});
+data.sort((a, b) => a.x - b.x);
+var labels = data.map(point => point.x.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
+var values = data.map(point => point.y);
+
 var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
     type: 'bar',
     data: {
@@ -58,6 +74,8 @@ var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
         ]
     },
     options: {
+        responsive: false,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 display: false,
@@ -71,34 +89,71 @@ var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
         }
     }
 }); 
-var chart2 = new Chart(ctx2, null); 
-var chart3 = new Chart(ctx3, { // Bar chart for TODO:
-    type: 'line',
+var chart2 = new Chart(ctx2, {
+    type: 'pie',
     data: {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [{
-        label: 'My First Dataset',
-        data: [65, 59, 80, 81, 56, 55, 40],
-        fill: false,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
-      }]
+        labels: [
+            'Eagle',
+            'Birdie',
+            'Par',
+            'Bogie',
+            'Double Bogie',
+            'Triple Bogie+'
+        ],
+    datasets: [{
+        backgroundColor: [
+            'DodgerBlue',
+            'MediumSeaGreen',
+            'Gray',
+            'Red',
+            'MediumPurple',
+            'Sienna',
+        ],
+        borderColor: '#102820',
+        hoverOffset: 4
+        }],
     },
     options: {
-        plugins: {
-          annotation: {
-            annotations: {
-              line1: {
-                type: 'linse',
-                yMin: 60,
-                yMax: 60,
-                borderColor: 'rgb(255, 99, 132)',
-                borderWidth: 2,
-              }
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+        animateRotate: true,
+        animateScale: true,
+        duration: 2000, 
+        easing: 'easeInOutQuart'
+    }}
+});
+var chart3 = new Chart(ctx3, { // Bar chart for scores through time
+    type: 'line',
+            data: {
+                //labels: labels,
+                datasets: [{
+                    label: 'Rounds Scores',
+                    //data: values,
+                    borderWidth: 2,
+                    borderColor: '#102820',
+                    backgroundColor: '#4C6444',
+                    tension: 0.1 // Adjust tension for smoothing the line
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    xAxis: [{
+                        type: 'time',
+                        time: {
+                            unit: 'month', // Display x-axis in months
+                            // displayFormats: {
+                            //     month: 'MM yyyy' // Format for month/year display
+                            // }
+                        }
+                    }],
+                    yAxis: [{
+                        beginAtZero: true // Start y-axis from zero
+                    }]
+                }
             }
-          }
-        }
-    }
 });
 var chart4 = new Chart(ctx4, {// Pie chart for specific hole and all holes
     type: 'pie',
@@ -126,6 +181,8 @@ var chart4 = new Chart(ctx4, {// Pie chart for specific hole and all holes
     }],
 },
 options: {
+    responsive: true,
+    maintainAspectRatio: false,
     animation: {
         animateRotate: true,
         animateScale: true,
@@ -133,6 +190,8 @@ options: {
         easing: 'easeInOutQuart'
     }}
 }); 
+chart1.resize(1000,300);
+
 
 $(() => {
     init();
@@ -354,9 +413,11 @@ function  makeRoundArray(rounds) {
     roundsArray = [];
     parArray = [];
     scoreArray = [];
+    scoreDateArray = [];
     for(let i = 0; i < rounds.length; i++) {
         junk1 = [];
         junk2 = [];
+        junk3 = [];
         junk1.push(rounds[i].SCORE1 - rounds[i].PAR1);
         junk2.push(rounds[i].SCORE1);
         junk1.push(rounds[i].SCORE2 - rounds[i].PAR2);
@@ -395,8 +456,12 @@ function  makeRoundArray(rounds) {
         junk2.push(rounds[i].SCORE18);
         junk1.push(rounds[i].TOTALSCORE - rounds[i].TOTALPAR);
         junk2.push(rounds[i].TOTALSCORE);
+        junk3.push(rounds[i].DATE);
+        junk3.push(rounds[i].TOTALSCORE);
+        junk3.push(rounds[i].TOTALPAR);
         roundsArray.push(junk1);
         scoreArray.push(junk2);
+        scoreDateArray.push(junk3);
     }; 
     parArray.push(rounds[0].PAR1);
     parArray.push(rounds[0].PAR2);
@@ -444,9 +509,7 @@ function makeChart1() {
         }
     });
     addBorders(chart1, parColors, parBorders);
-    removeData(chart1);
     addData(chart1, data);
-    c
 }
 function makeChart2() {
     let data = [0,0,0,0,0,0]
@@ -474,43 +537,21 @@ function makeChart2() {
             }
         }
     });
-    chart2.destroy()
-    chart2 = new Chart(ctx2, {
-        type: 'pie',
-        data: {
-            labels: [
-                'Eagle',
-                'Birdie',
-                'Par',
-                'Bogie',
-                'Double Bogie',
-                'Triple Bogie+'
-            ],
-        datasets: [{
-            data: data,
-            backgroundColor: [
-                'DodgerBlue',
-                'MediumSeaGreen',
-                'Gray',
-                'Red',
-                'MediumPurple',
-                'Sienna',
-            ],
-            borderColor: '#102820',
-            hoverOffset: 4
-            }],
-        },
-        options: {
-            animation: {
-            animateRotate: true,
-            animateScale: true,
-            duration: 2000, 
-            easing: 'easeInOutQuart'
-        }}
-    });
 }
 function makeChart3() {
-  
+    var data = [
+        // { x: '01/01/2023', y: 10 },
+        // { x: '03/15/2023', y: 20 },
+        // { x: '05/20/2023', y: 15 },
+        // // Add more data points here...
+        // { x: '04/01/2024', y: 25 },
+        // { x: '05/01/2024', y: 30 }
+    ];
+    scoreDateArray.forEach((round,index) => {
+        data.push({x: round[0], y: round[1]});
+        console.log(round[0]);
+    });
+    addLabels(chart3, data);
 }
 function makeChart4() {
     let data = [0,0,0,0,0,0]
@@ -564,8 +605,7 @@ function makeChart4() {
             }
         });
     }
-    removeData(chart4);
-    addData(chart4, data)
+    addData(chart4, data);
 }
 function addData(chart, newData) {
     chart.data.datasets.forEach((dataset) => {
@@ -573,17 +613,20 @@ function addData(chart, newData) {
     });
     chart.update();
 }
-function removeData(chart) {
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data = [];
-    });
-    chart.update();
-}
 function addBorders(chart, parColors, parBorders) {
     chart.data.datasets.forEach((dataset) => {
-        dataset.backgroundColor = [];
-        dataset.borderColor = [];
         dataset.backgroundColor = parColors;
         dataset.borderColor = parBorders;
     });
+}
+function addLabels (chart, data) {
+    data.forEach(function(point) {
+        point.x = new Date(point.x);
+    });
+    data.sort((a, b) => a.x - b.x);
+    var labels = data.map(point => point.x.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
+    var values = data.map(point => point.y);
+    addData(chart3, values);
+    chart.data.labels = labels;
+    chart.update();
 }

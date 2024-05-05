@@ -31,7 +31,7 @@ courseInfo = [["Covered Bridge Park",
                 3, 3, 3, 3, 3, 3, 54]]
 rounds = []
 
-with open('rounds.csv', 'r') as f:
+with open('pyRounds.csv', 'r') as f:
     reader = csv.reader(f)
     for row in reader:
         if (row[0] != 'DATE'):
@@ -44,7 +44,7 @@ for x in rounds:
     course = x[2]
     for i in range(3,22):
         x.append(getPar(x[i], i - 2, course))
-np.savetxt("newrounds.csv",
+np.savetxt("pyRounds.csv",
         rounds,
         delimiter =", ",
         fmt ='% s')

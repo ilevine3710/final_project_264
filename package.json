@@ -11,6 +11,7 @@
   "dependencies": {
     "better-sqlite3": "^9.6.0",
     "chart.js": "^4.4.2",
+    "chartjs-plugin-annotation": "^3.0.1",
     "express": "^4.19.2",
     "jquery-csv": "^1.0.21",
     "sqlite": "^5.1.1",

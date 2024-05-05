@@ -98,7 +98,8 @@
     display: grid;
     grid-template-areas: 
     "bar bar" 
-    "gameSetup map";
+    "gameSetup map"
+    "nav map";
   }
   #bar {
     grid-area: bar;
@@ -143,6 +144,28 @@
     background-color: #8A6240; /* Darker shade of button color */
   }
 
+  #nav{
+    grid-area: nav;
+    background-color: #00000000;
+    display: grid;
+    grid-template-areas: 
+    'playerText playerText'
+    'newPlayer play'; /*TODO: I kinda want this flexbox'd*/
+    width: 300px;
+    margin-left: 10px;
+  }
+  #newPlayer{
+    grid-area: newPlayer;
+  }
+  #play{
+    grid-area: play;
+  }
+  #playerText{
+    grid-area: playerText;
+  }
+  #playerText > input{
+    width: 100%;
+  }
   #gameSetup{
     grid-area: gameSetup;
     background-color: #00000000;
@@ -177,6 +200,7 @@
   #playerselect{
     grid-area: playerselect;
   }
+  
   #map{
     margin-top: 20px;
     grid-area: map;
@@ -191,9 +215,7 @@
     border-style: solid;
     border-left: #4D2D1800;
     border-right: #4D2D1800;
-    display: grid;
-    grid-template-areas: 
-    'username remove';
+    border-top: #00000000;
     width: 80%;
     margin-left: 10%;
   }
@@ -202,10 +224,6 @@
     padding-left: 2px;
     padding-top: 4px;
     padding-bottom: 4px;
-  }
-  .remove{
-    padding-top: 1px;
-    grid-area: remove;
   }
   
 

@@ -1,3 +1,41 @@
+var roundsArray = []; // Array to hold the score vs par of each hole of each round
+var parArray = []; // Array to hold the par of each hole of each round
+var scoreArray = []; // Array to hold the score of each hole of each round
+var scoreDateArray = []; // Array to hold the date vs score of each round
+
+// Changes colors of cells based on par
+var customFormatter = function(cell){
+    var cellValue  = cell.getValue();
+    var holeName = cell.getColumn().getField();
+    var holeIndex = 0
+    if (holeName.length == 5) {
+        holeIndex = parseInt(holeName[4]) - 1;
+    } else {
+        holeIndex = parseInt(holeName[4] + holeName[5]) - 1;
+    }
+    if (parArray.length != 0) {
+        let parScore = cellValue - parArray[holeIndex];
+        let color = "rgba(139, 69, 19, 0.5)";
+        switch(parScore){
+            case (-2):
+                color = "rgba(58, 58, 241, 0.5)";
+                break;
+            case (-1):
+                color = "rgba(0, 128, 0, 0.5)";
+                break;
+            case (0):
+                color = "rgba(128, 128, 128, 0.5)";
+                break;
+            case (1):
+                color = "rgba(255, 0, 0, 0.5)";
+                break;
+            case (2):
+                color = "rgb(128, 0, 128, 0.5)";
+                break;
+        } cell.getElement().style.backgroundColor = color;
+    }
+    return cellValue;
+}
 table = new Tabulator("#table", { // Table to store all rounds
     layout:"fitData",
     addRowPos:"top",          //when adding a new row, add it to the top of the table
@@ -12,53 +50,45 @@ table = new Tabulator("#table", { // Table to store all rounds
         {title:"Player", field:"PLAYER", frozen:true},
         {title:"Course", field:"COURSE", frozen:true},
         {title:"Total Score", field:"TOTALSCORE", frozen:true},
-        {title:"Hole 1", field:"HOLE1"},
-        {title:"Hole 2", field:"HOLE2"},
-        {title:"Hole 3", field:"HOLE3"},
-        {title:"Hole 4", field:"HOLE4"},
-        {title:"Hole 5", field:"HOLE5"},
-        {title:"Hole 6", field:"HOLE6"},
-        {title:"Hole 7", field:"HOLE7"},
-        {title:"Hole 8", field:"HOLE8"},
-        {title:"Hole 9", field:"HOLE9"},
-        {title:"Hole 10", field:"HOLE10"},
-        {title:"Hole 11", field:"HOLE11"},
-        {title:"Hole 12", field:"HOLE12"},
-        {title:"Hole 13", field:"HOLE13"},
-        {title:"Hole 14", field:"HOLE14"},
-        {title:"Hole 15", field:"HOLE15"},
-        {title:"Hole 16", field:"HOLE16"},
-        {title:"Hole 17", field:"HOLE17"},
-        {title:"Hole 18", field:"HOLE18"},
-        
+        {title:"Hole 1", field:"HOLE1", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 2", field:"HOLE2", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 3", field:"HOLE3", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 4", field:"HOLE4", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 5", field:"HOLE5", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 6", field:"HOLE6", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 7", field:"HOLE7", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 8", field:"HOLE8", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 9", field:"HOLE9", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 10", field:"HOLE10", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 11", field:"HOLE11", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 12", field:"HOLE12", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 13", field:"HOLE13", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 14", field:"HOLE14", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 15", field:"HOLE15", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 16", field:"HOLE16", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 17", field:"HOLE17", formatter:customFormatter, hozAlign: "center"},
+        {title:"Hole 18", field:"HOLE18", formatter:customFormatter, hozAlign: "center"},
     ],
 });
-
-//TODO: FIX COLORS MORON IDIOT
-
-var roundsArray = []; // Array to hold the score vs par of each hole of each round
-var parArray = []; // Array to hold the par of each hole of each round
-var scoreArray = []; // Array to hold the score of each hole of each round
-var scoreDateArray = []; // Array to hold the date vs score of each round
 
 const ctx1 = document.getElementById('chart1');
 const ctx2 = document.getElementById('chart3');
 const ctx3 = document.getElementById('chart4');
-const clearLine = {
+const clearLine = { // Clear line
     type: 'line',
     yMin: 4,
     yMax: 4,
     borderColor: 'rgba(54, 162, 255, 0.0)',
     borderWidth: 1,
 }
-const line2 = {
+const line2 = { // Par 4 line
     type: 'line',
     yMin: 4,
     yMax: 4,
     borderColor: 'rgba(54, 162, 255, 0.9)',
     borderWidth: 1,
 }
-const line3 = {
+const line3 = { // Par 5 line
     type: 'line',
     yMin: 5,
     yMax: 5,
@@ -328,7 +358,6 @@ function changeRounds (rounds) {
     makeChart2();
     makeChart3();
     let roundsData = [];
-    let colorsArr = [];
     rounds.forEach((round, index) => {
         date = round.DATE
         player = round.PLAYER
@@ -342,9 +371,8 @@ function changeRounds (rounds) {
         HOLE1: round.SCORE1, HOLE2: round.SCORE2, HOLE3: round.SCORE3, HOLE4: round.SCORE4, HOLE5: round.SCORE5, HOLE6: round.SCORE6,
         HOLE7: round.SCORE7, HOLE8: round.SCORE8, HOLE9: round.SCORE9, HOLE10: round.SCORE10, HOLE11: round.SCORE11, HOLE12: round.SCORE12,
         HOLE13: round.SCORE13, HOLE14: round.SCORE14, HOLE15: round.SCORE15, HOLE16: round.SCORE16, HOLE17: round.SCORE17, HOLE18: round.SCORE18})
-        colorsArr.push(getColors(round));
     }); 
-    makeTable(roundsData, colorsArr);
+    table.setData(roundsData);
 } 
 /* loadPlayerDropdown(players) function:
     * Add "All players" option into players dropdown
@@ -367,23 +395,6 @@ function loadCourseDropdown(courses) {
         c = course.COURSE
         $("#courseSelectorDropdown").append(`<option value="${c}">${c}</option>`);
     });
-}
-/* makeTable(data, colorsArr) function:
-    * Sets the data of the table to "data"
-    * Sets the colors of each cell to the corresponding color
- */
-function makeTable(data, colorsArr) {
-    table.setData([]);
-    table.setData(data);
-    table.setPageSize(1000);
-    table.setPageSize(7);
-    const rows = table.getRows();
-    for (let i = 0; i < rows.length; i++) {
-        cells = rows[i].getCells();
-        for (let j = 4; j < 22; j++) {
-            cells[j].getElement().style.color = colorsArr[i][j - 4];
-        } 
-    } 
 }
 /* getColors(round) function:
     * Computes the correct color for each hole of each rounds based on its score vs par
@@ -566,7 +577,6 @@ function makeChart2() {
             maxTime = convertDate(round[0]);
         }
     }); 
-    console.log(minTime);
     addData(chart2, data);
     fixAxes(chart2, subMonth(minTime), addMonth(maxTime));
 }

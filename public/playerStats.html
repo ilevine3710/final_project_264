@@ -19,7 +19,9 @@
   <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
   <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>  
   <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-trendline"></script>
   
 
   <link rel="manifest" href="site.webmanifest">
@@ -49,23 +51,18 @@
     </div>
     <div id = "charts">
         <div class = "chartBoxContainer1" id = "chartBox1">
-            <h2>Chart1</h2>
-            <h5>chart1 description</h5>
+            <h2>Average Scores</h2>
+            <h7>This chart shows the average scores on each hole by the player selected on the course selected</h7>
             <canvas id = "chart1"></canvas>
         </div>  
-        <div class = "chartBoxContainer2" id = "chartBox2">
-            <h2>Chart2</h2>
-            <h5>chart2 description</h5>
-            <canvas id = "chart2"></canvas>
-        </div>  
         <div class = "chartBoxContainer1" id = "chartBox3" >
-            <h2>Chart3</h2>
-            <h5>chart3 description</h5>
+            <h2>Total Scores</h2>
+            <h7>This chart shows all the rounds by date by the player selected on the course selected, the line shows the trend of the scores</h7>
             <canvas class = "chartBox" id = "chart3"></canvas>
         </div>  
         <div class = "chartBoxContainer2" id = "chartBox4">
-            <h2>Chart4</h2>
-            <h5>chart4 description</h5>
+            <h2>Scores on each Hole</h2>
+            <h7>This chart shows the scores on the selected by the player selected on the course selected</h7>
             <canvas class = "chartBox" id = "chart4"></canvas>
             <select name="holeSelectorDropdown" id="holeSelectorDropdown"></select>
         </div>  

@@ -2,7 +2,7 @@ table = new Tabulator("#table", {
     layout:"fitData",
     addRowPos:"top",          //when adding a new row, add it to the top of the table
     pagination:"local",       //paginate the data
-    paginationSize:1000,         //allow 7 rows per page of data
+    paginationSize:7,         //allow 7 rows per page of data
     paginationCounter:"rows", //display count of paginated rows in footer
     columnDefaults:{
         tooltip:true,         //show tool tips on cells
@@ -34,8 +34,8 @@ table = new Tabulator("#table", {
     ],
 });
 
-//TODO: fix lines on chart 1
-// table with best performance on each hole
+// TODO:table with best performance on each hole
+// TODO: FIX SCALE
 
 var roundsArray = []
 var parArray = [];
@@ -43,24 +43,29 @@ var scoreArray = [];
 var scoreDateArray = [];
 var allPlayers = true;
 const ctx1 = document.getElementById('chart1');
-const ctx2 = document.getElementById('chart2');
 const ctx3 = document.getElementById('chart3');
 const ctx4 = document.getElementById('chart4');
-var data = [
-    { x: '01/01/2023', y: 10 },
-    { x: '03/15/2023', y: 20 },
-    { x: '05/20/2023', y: 15 },
-    // Add more data points here...
-    { x: '04/01/2024', y: 25 },
-    { x: '05/01/2024', y: 30 }
-]
-data.forEach(function(point) {
-    point.x = new Date(point.x);
-});
-data.sort((a, b) => a.x - b.x);
-var labels = data.map(point => point.x.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
-var values = data.map(point => point.y);
-
+const clearLine = {
+    type: 'line',
+    yMin: 4,
+    yMax: 4,
+    borderColor: 'rgba(54, 162, 255, 0.0)',
+    borderWidth: 1,
+}
+const line2 = {
+    type: 'line',
+    yMin: 4,
+    yMax: 4,
+    borderColor: 'rgba(54, 162, 255, 0.9)',
+    borderWidth: 1,
+}
+const line3 = {
+    type: 'line',
+    yMin: 5,
+    yMax: 5,
+    borderColor: 'rgba(153, 102, 255, 0.9)',
+    borderWidth: 1,
+}
 var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
     type: 'bar',
     data: {
@@ -74,12 +79,34 @@ var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
         ]
     },
     options: {
-        responsive: false,
-        maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: true,
         plugins: {
+            annotation: {
+                annotations: {
+                    line1: {
+                        type: 'line',
+                        yMin: 3,
+                        yMax: 3,
+                        borderColor: 'rgba(75, 200, 100, 0.9)',
+                        borderWidth: 1,
+                    },
+                    line2: clearLine,
+                    line3: clearLine,
+                }
+            },
             legend: {
                 display: false,
             },
+        },
+        scales: {
+            y: {
+                min: 0,
+                max: 6,
+                ticks: {
+                    stepSize: 0.5 
+                }
+            }
         },
         animation: {
             animateRotate: true,
@@ -89,71 +116,46 @@ var chart1 = new Chart(ctx1, { // Bar chart for average score on each hole
         }
     }
 }); 
-var chart2 = new Chart(ctx2, {
-    type: 'pie',
+var chart3 = new Chart(ctx3, { // Bar chart for scores through time
+    type: 'scatter',
     data: {
-        labels: [
-            'Eagle',
-            'Birdie',
-            'Par',
-            'Bogie',
-            'Double Bogie',
-            'Triple Bogie+'
-        ],
-    datasets: [{
-        backgroundColor: [
-            'DodgerBlue',
-            'MediumSeaGreen',
-            'Gray',
-            'Red',
-            'MediumPurple',
-            'Sienna',
-        ],
-        borderColor: '#102820',
-        hoverOffset: 4
-        }],
+        
+        datasets: [{
+            labels: [],
+            data: [],
+            borderColor: "#102820",
+            backgroundColor: "#4C6444",
+            trendlineLinear: {
+                style: "#4C6444",
+                lineStyle: "dotted",
+                width: 1.5,
+            }
+        },],
     },
     options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        animation: {
-        animateRotate: true,
-        animateScale: true,
-        duration: 2000, 
-        easing: 'easeInOutQuart'
-    }}
-});
-var chart3 = new Chart(ctx3, { // Bar chart for scores through time
-    type: 'line',
-            data: {
-                //labels: labels,
-                datasets: [{
-                    label: 'Rounds Scores',
-                    //data: values,
-                    borderWidth: 2,
-                    borderColor: '#102820',
-                    backgroundColor: '#4C6444',
-                    tension: 0.1 // Adjust tension for smoothing the line
-                }]
+        plugins: {
+            legend: {
+                display: false
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    xAxis: [{
-                        type: 'time',
-                        time: {
-                            unit: 'month', // Display x-axis in months
-                            // displayFormats: {
-                            //     month: 'MM yyyy' // Format for month/year display
-                            // }
-                        }
-                    }],
-                    yAxis: [{
-                        beginAtZero: true // Start y-axis from zero
-                    }]
+        },
+        scales: {
+            x: {
+                min: convertDate("06/01/2022"),
+                max: convertDate("06/01/2024"),
+                type: 'time',
+                time: {
+                    unit: "month",
+                    displayFormats: {
+                        quarter: 'MM YYYY DD'
+                    }
                 }
+            },
+            y: {
+                min: 50,
+                max: 80,
             }
+        }
+    }
 });
 var chart4 = new Chart(ctx4, {// Pie chart for specific hole and all holes
     type: 'pie',
@@ -190,7 +192,6 @@ options: {
         easing: 'easeInOutQuart'
     }}
 }); 
-chart1.resize(1000,300);
 
 
 $(() => {
@@ -409,7 +410,7 @@ function getColors(round) {
         } colors[i] = color
     } return colors;
 }
-function  makeRoundArray(rounds) {
+function makeRoundArray(rounds) {
     roundsArray = [];
     parArray = [];
     scoreArray = [];
@@ -493,21 +494,34 @@ function makeChart1() {
         }
     });
     parArray.forEach((par, index) => { 
-        switch (par) {
-            case(3):
-                parColors.push("rgba(75, 192, 192, 0.2)");
-                parBorders.push("green");
-                break;
-            case(4):
-                parColors.push("rgba(54, 162, 235, 0.2)");
-                parBorders.push("blue");
-                break;
-            default:
-                parColors.push("rgba(153, 102, 255, 0.2)");
-                parBorders.push("purple");
-                break;
+        if (index < 18) {
+            switch (par) {
+                case(3):
+                    parColors.push("rgba(75, 192, 192, 0.2)");
+                    parBorders.push("green");
+                    break;
+                case(4):
+                    parColors.push("rgba(54, 162, 235, 0.2)");
+                    parBorders.push("blue");
+                    break;
+                default :
+                    parColors.push("rgba(153, 102, 255, 0.2)");
+                    parBorders.push("purple");
+                    break;
+            }
         }
     });
+    if (parBorders.includes("blue")) {
+        chart1.options.plugins.annotation.annotations.line2 = line2;
+    } else {
+        chart1.options.plugins.annotation.annotations.line2 = clearLine;
+    }
+    if (parBorders.includes("purple")) {
+        console.log(parBorders)
+        chart1.options.plugins.annotation.annotations.line3 = line3;
+    } else {
+        chart1.options.plugins.annotation.annotations.line3 = clearLine;
+    }
     addBorders(chart1, parColors, parBorders);
     addData(chart1, data);
 }
@@ -539,19 +553,20 @@ function makeChart2() {
     });
 }
 function makeChart3() {
-    var data = [
-        // { x: '01/01/2023', y: 10 },
-        // { x: '03/15/2023', y: 20 },
-        // { x: '05/20/2023', y: 15 },
-        // // Add more data points here...
-        // { x: '04/01/2024', y: 25 },
-        // { x: '05/01/2024', y: 30 }
-    ];
+    let data = [];
+    let minTime = convertDate(scoreDateArray[0][0]);
+    let maxTime = convertDate(scoreDateArray[0][0]);
     scoreDateArray.forEach((round,index) => {
-        data.push({x: round[0], y: round[1]});
-        console.log(round[0]);
-    });
-    addLabels(chart3, data);
+        data.push({x: convertDate(round[0]), y: round[1]});
+        if (minTime > convertDate(round[0])) {
+            minTime = convertDate(round[0]);
+        } if (maxTime < convertDate(round[0])) {
+            maxTime = convertDate(round[0]);
+        }
+    }); 
+    console.log(minTime);
+    addData(chart3, data);
+    fixAxes(chart3, subMonth(minTime), addMonth(maxTime));
 }
 function makeChart4() {
     let data = [0,0,0,0,0,0]
@@ -619,14 +634,45 @@ function addBorders(chart, parColors, parBorders) {
         dataset.borderColor = parBorders;
     });
 }
-function addLabels (chart, data) {
-    data.forEach(function(point) {
-        point.x = new Date(point.x);
-    });
-    data.sort((a, b) => a.x - b.x);
-    var labels = data.map(point => point.x.toLocaleDateString('en-US', { month: 'short', year: 'numeric' }));
-    var values = data.map(point => point.y);
-    addData(chart3, values);
-    chart.data.labels = labels;
-    chart.update();
+function convertDate (date) {
+    var parts = date.split('/');
+    return parts[2] + '-' + parts[0] + '-' + parts[1];
+}
+function addMonth (date) {
+    var parts = date.split('-');
+    let month = parseInt(parts[1]);
+    let day = parts[2];
+    let year = parseInt(parts[0]);
+    if (month == 12) {
+        month = 1;
+        year++;
+    } else {
+        month++;
+    }
+    if (month <= 9) {
+        return year + "-0" + month + "-" + day;
+    }
+    return year + "-" + month + "-" + day;
+} 
+function subMonth (date) {
+    var parts = date.split('-');
+    let month = parseInt(parts[1]);
+    let day = parts[2];
+    let year = parseInt(parts[0]);
+    if (month == 1) {
+        month = 12;
+        year--;
+    }
+    else {
+        month--;
+    }
+    if (month <= 9) {
+        return year + "-0" + month + "-" + day;
+    }
+    return year + "-" + month + "-" + day;
+}
+function fixAxes(chart, minTime, maxTime) {
+    chart.options.scales.x.min = minTime;
+    chart.options.scales.x.max = maxTime; 
+    chart.update();   
 }

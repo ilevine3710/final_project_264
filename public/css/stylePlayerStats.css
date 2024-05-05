@@ -203,9 +203,9 @@
   #charts {
     display: grid;
     grid-template-areas: 
-      'chartBox1 chartBox1'
-      'chartBox3 chartBox3'
-      'chartBox2 chartBox4';
+      'chartBox1'
+      'chartBox3'
+      'chartBox4';
   }
   #charts > div{
     padding: 40px;
@@ -214,25 +214,11 @@
     margin-top: 10px;
     margin-bottom: 10px;
     text-align: center;
-    height: 500px;
-    width: 500px;
+    width: auto;
+    height: 600px;
   }
-  /* .chartBoxContainer1 {
-    height: 500px;
-    width: 2000px;
-    overflow: auto;
-  }
-  .chartBoxContainer2 {
-    height: 550px;
-    width: 600px;
-  } */
   #chartBox1 {
     grid-area: chartBox1;
-    width: 1400px;
-    height: 500px;
-  }
-  #chartBox2 {
-    grid-area: chartBox2;
   }
   #chartBox3 {
     grid-area: chartBox3;
@@ -244,7 +230,19 @@
     margin-top: 10px;
   }
   canvas {
-    margin: 0 auto !important;
+    margin: 0 auto;
+  } 
+  #chart1 {
+    width: 1000px;
+    height: 300px;
+  }
+  #chart3 {
+    width: 1300px;
+    height: 500px;
+  }
+  #chart4 {
+    width: 700px;
+    height: 300px;
   }
   /* ==========================================================================
      Helper classes

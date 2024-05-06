@@ -158,6 +158,10 @@ $("#prevHole").click(() => {
     increment(-1);
 });
 
+$("#Quit").click(()=>{
+    window.location.href = "http://localhost:3000/Home";
+})
+
 $(()=>{
     //loads game setting into gameSettigns variable for use later
     $.ajax(

@@ -96,10 +96,9 @@ body {
     font-family: "Chakra Petch", sans-serif;
     background-color: #CABA9C;
     color: #4D2D18;
-    display: grid;
-    grid-template-areas: 
-    "bar" 
-    "page";
+    display: flex;
+    align-content: space-between;
+    flex-direction: column;
 }
 #bar {
     grid-area: bar;
@@ -144,8 +143,38 @@ body {
 background-color: #8A6240; /* Darker shade of button color */
 }
 
+#qbar {
+    background-color: #4C6444;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+#Quit {
+    margin-right: 100px;
+    height: 35px;
+    margin-top: 8px;
+    font-size: 25px;
+    color: #4D2D18;
+    display: inline-block;
+    background-color: #4C6444; /* Button color */
+    text-decoration: none; /* Remove underline */
+    border-radius: 5px; /* Rounded corners */
+    border: none; /* Remove default border */
+    cursor: pointer; /* Show pointer on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+#Quit:hover {
+    background-color: #8A6240; /* Darker shade of button color */
+}
+
 #page{
     grid-area: page;
+    overflow: auto;
     display: grid;
     grid-template-areas: 
     "title title leaderboard"

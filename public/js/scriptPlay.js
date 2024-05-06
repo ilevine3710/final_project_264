@@ -5,6 +5,7 @@ let scores = [];
 let pars = [];
 
 let hole = 1;
+let highest = 1;
 
 function getCourse(){
     return new Promise(function(resolve,reject) {
@@ -47,6 +48,39 @@ function initpage() {
     });
 }
 
+function updateScorecard() {
+    $("#scoreRows").html("");
+    let chartHtml = ``;
+    for (let i = 0; i < gameSetting.people.length; i++) {
+        chartHtml = chartHtml + `<tr><th>${gameSetting.people[i]}</th>`;
+        for (let j = 0; j < 9; j++) {
+            if (j+1 < highest) {
+                chartHtml = chartHtml + `<td>${scores[i][j]}</td>`;
+            }
+            else{
+                chartHtml = chartHtml + `<td>-</td>`;
+            }
+        }
+        chartHtml = chartHtml + `</tr>`;
+    }
+    $("#scoreRows").html(chartHtml);
+    $("#scoreRows2").html("");
+    let chart2Html = ``;
+    for (let i = 0; i < gameSetting.people.length; i++) {
+        chart2Html = chart2Html + `<tr><th>${gameSetting.people[i]}</th>`;
+        for (let j = 9; j < 18; j++) {
+            if (j+1 < highest) {
+                chart2Html = chart2Html + `<td>${scores[i][j]}</td>`;
+            }
+            else{
+                chart2Html = chart2Html + `<td>-</td>`;
+            }
+        }
+        chart2Html = chart2Html + `</tr>`;
+    }
+    $("#scoreRows2").html(chart2Html);
+}
+
 function increment(step) {
     tempHoleScores = [];
     $(".holeScore").each(function() {
@@ -64,12 +98,14 @@ function increment(step) {
     }
     $("#holeScores").html("");
     hole = hole + step;
+    if(hole > highest){ highest = hole; }
     for (let i = 0; i < gameSetting.people.length; i++) {
         old = $("#holeScores").html();
         $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
         <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${scores[i][hole-1]}" min="1" max="9"></div>`);
     }
     $("#holeNumber").html(`Hole ${hole}`);
+    updateScorecard();
 }
 
 $("#nextHole").click(() => {

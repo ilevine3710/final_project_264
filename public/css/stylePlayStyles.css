@@ -155,9 +155,49 @@ background-color: #8A6240; /* Darker shade of button color */
 
 #title{
     grid-area: title;
+    font-size: 50px;
 }
 #leaderboard{
     grid-area: leaderboard;
+    overflow: auto;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #4D2D18;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 425px;
+    height: 250px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#holeScores::-webkit-scrollbar { /*Chrome, Opera, Safari*/
+    display: none;
+}
+#leaderboard > div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #4C6444;
+    border-radius: 10px;
+}
+#leaderboard >div >div{
+    margin-left: 10px;
+}
+.tag{
+    padding-top: 15px;
+}
+.rank{
+    background-color: #8A6240;
+    border-radius: 10px;
+    width: 75px;
+    height: 40px;
+    padding-top: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
 }
 #leftside{
     grid-area: leftside;
@@ -165,8 +205,19 @@ background-color: #8A6240; /* Darker shade of button color */
 #map{
     grid-area: map;
 }
+#map > iframe{
+    width: 550px;
+    height: 400px;
+}
 #scorecard{
     grid-area: scorecard;
+    height: 230px;
+    overflow: auto;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+#holeScores::-webkit-scrollbar { /*Chrome, Opera, Safari*/
+    display: none; /*I hate scrollbars*/
 }
 
 .holeScore {
@@ -176,7 +227,7 @@ background-color: #8A6240; /* Darker shade of button color */
     height: 50px;
     font-size: 18px; /* adjust as needed */
     text-align: center; /* center-align the number */
-    padding-right: 40px; /* adjust as needed to make space for the buttons */
+    margin-right: 40px; /* adjust as needed to make space for the buttons */
     margin-bottom: 10px;
 }
   
@@ -199,7 +250,7 @@ background-color: #8A6240; /* Darker shade of button color */
     display: flex;
     flex-direction: column;
     align-items: flex-end; /* Align items to the right */
-    margin-right: 10px;
+    margin-left: 10px;
     border: #4D2D18;
     border-width: 2px;
     border-style: solid;
@@ -215,6 +266,8 @@ background-color: #8A6240; /* Darker shade of button color */
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
 #holeNav > div{
     font-size: 30px;

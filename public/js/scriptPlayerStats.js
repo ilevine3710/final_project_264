@@ -183,6 +183,12 @@ var chart2 = new Chart(ctx2, { // Scatter chart for scores through time
                 min: 50,
                 max: 80,
             }
+        },
+        animation: {
+            animateRotate: true,
+            animateScale: true,
+            duration: 500, 
+            easing: 'easeInOutQuart'
         }
     }
 });

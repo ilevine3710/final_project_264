@@ -47,7 +47,7 @@ function initpage() {
     });
 }
 
-$("#nextHole").click(() => {
+function increment(step) {
     tempHoleScores = [];
     $(".holeScore").each(function() {
         val = parseInt($(this).val());
@@ -56,18 +56,28 @@ $("#nextHole").click(() => {
     for (let i = 0; i < gameSetting.people.length; i++) {
         scores[i][hole-1] = tempHoleScores[i];
     }
-    if(hole === 18){
+    if(hole === 18 && step > 0){
         return; //come bak to this
     }
+    if(hole === 1 && step < 0){
+        return //Tozshey
+    }
     $("#holeScores").html("");
-    hole = hole + 1;
+    hole = hole + step;
     for (let i = 0; i < gameSetting.people.length; i++) {
         old = $("#holeScores").html();
         $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
-        <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${pars[hole-1]}" min="1" max="9"></div>`);
+        <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${scores[i][hole-1]}" min="1" max="9"></div>`);
     }
     $("#holeNumber").html(`Hole ${hole}`);
+}
 
+$("#nextHole").click(() => {
+    increment(1);
+});
+
+$("#prevHole").click(() => {
+    increment(-1);
 });
 
 $(()=>{

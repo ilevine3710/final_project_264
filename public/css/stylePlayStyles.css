@@ -165,9 +165,9 @@ background-color: #8A6240; /* Darker shade of button color */
     border-color: #4D2D18;
     margin-top: 10px;
     margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 11px;
     width: 425px;
-    height: 250px;
+    height: 227px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
@@ -211,7 +211,7 @@ background-color: #8A6240; /* Darker shade of button color */
 }
 #scorecard{
     grid-area: scorecard;
-    height: 230px;
+    height: 227px;
     overflow: auto;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
@@ -245,7 +245,7 @@ background-color: #8A6240; /* Darker shade of button color */
 
 #holeScores{
     width: 250px;
-    height: 325px;
+    height: 350px;
     overflow: auto;
     display: flex;
     flex-direction: column;

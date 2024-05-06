@@ -137,6 +137,58 @@ body {
 .redirects:hover {
   background-color: #8A6240; /* Darker shade of button color */
 }
+#container {
+    display: grid;
+    grid-template-areas: 
+      'dg images courses';
+}
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 40px;
+}
+h5 {
+    padding: 20px;
+    font-size: 23px;
+}
+img {
+    max-width: 200px;
+    margin: 5px;
+}
+#container > div {
+    margin: 15px;
+    position: relative;
+    opacity: 0; /* Initially hidden */
+    animation: fadeInDriftUp 1.5s forwards;
+    text-align: left;
+
+}  
+@keyframes fadeInDriftUp {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+#images {
+    grid-area: images;
+    display: grid;
+    grid-template-areas: 
+      'image1'
+      'image2'
+      'image3'
+      'image4'
+      'image5'
+      'image6';
+}
+#dg {
+    grid-area: dg;
+}
+#courses {
+    grid-area: courses;
+}
 /* ==========================================================================
    Helper classes
    ========================================================================== */

@@ -38,7 +38,7 @@ function initpage() {
     getCourse().then(function(got){
         pars = got;
         for (let i = 0; i < gameSetting.people.length; i++) {
-            scores.push(pars);
+            scores.push(pars.slice(0)); //gotta pass by value >_>
             old = $("#holeScores").html();
             $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
             <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${pars[hole]}" min="1" max="9"></div>`);
@@ -46,6 +46,29 @@ function initpage() {
         }
     });
 }
+
+$("#nextHole").click(() => {
+    tempHoleScores = [];
+    $(".holeScore").each(function() {
+        val = parseInt($(this).val());
+        tempHoleScores.push(val);
+    });
+    for (let i = 0; i < gameSetting.people.length; i++) {
+        scores[i][hole-1] = tempHoleScores[i];
+    }
+    if(hole === 18){
+        return; //come bak to this
+    }
+    $("#holeScores").html("");
+    hole = hole + 1;
+    for (let i = 0; i < gameSetting.people.length; i++) {
+        old = $("#holeScores").html();
+        $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
+        <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${pars[hole-1]}" min="1" max="9"></div>`);
+    }
+    $("#holeNumber").html(`Hole ${hole}`);
+
+});
 
 $(()=>{
     //loads game setting into gameSettigns variable for use later

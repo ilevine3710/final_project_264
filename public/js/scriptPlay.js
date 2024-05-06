@@ -3,6 +3,7 @@ let gameSetting = {};
 let scores = [];
 
 let pars = [];
+let total = 0;
 
 let hole = 1;
 let highest = 1;
@@ -38,6 +39,9 @@ function initpage() {
     //$("#state").html("course: " + gameSetting.course + "\nPlayers: " + gameSetting.people);
     getCourse().then(function(got){
         pars = got;
+        for (let i = 0; i < pars.length; i++) {
+            total = total+pars[i];
+        }
         for (let i = 0; i < gameSetting.people.length; i++) {
             scores.push(pars.slice(0)); //gotta pass by value >_>
             old = $("#holeScores").html();
@@ -81,6 +85,35 @@ function updateScorecard() {
     $("#scoreRows2").html(chart2Html);
 }
 
+function updateLeaderboard() {
+    overallScores = [];
+    for (let i = 0; i < gameSetting.people.length; i++) {
+        overall = 0;
+        e = 0;
+        for (let j = 0; j < hole; j++) {
+            overall = overall + scores[i][j];
+            e = e + pars[j];
+        }
+        overall = overall - e;
+        overallScores.push({player: gameSetting.people[i], overall: overall});
+    }
+    overallScores.sort(function(a, b) {
+        return a.overall - b.overall;
+    });
+    console.log(overallScores);
+    let leaderboardH = ``;
+    for (let i = 0; i < overallScores.length; i++) {
+        if(i === 0){
+            leaderboardH = `<div><div class="rank">👑${overallScores[i].overall}</div><div class="tag">${overallScores[i].player}</div></div>`;
+        }
+        else{
+            leaderboardH = leaderboardH + `<div><div class="rank">${overallScores[i].overall}</div><div class="tag">${overallScores[i].player}</div></div>`;
+        }
+        console.log(leaderboardH);
+    }
+    $("#leaderboard").html(leaderboardH);
+}
+
 function increment(step) {
     tempHoleScores = [];
     $(".holeScore").each(function() {
@@ -106,6 +139,7 @@ function increment(step) {
     }
     $("#holeNumber").html(`Hole ${hole}`);
     updateScorecard();
+    updateLeaderboard();
 }
 
 $("#nextHole").click(() => {

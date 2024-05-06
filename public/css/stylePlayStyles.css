@@ -98,9 +98,8 @@ body {
     color: #4D2D18;
     display: grid;
     grid-template-areas: 
-    "bar bar" 
-    "gameSetup map"
-    "nav map";
+    "bar" 
+    "page";
 }
 #bar {
     grid-area: bar;
@@ -143,6 +142,31 @@ body {
 }
 .redirects:hover {
 background-color: #8A6240; /* Darker shade of button color */
+}
+
+#page{
+    grid-area: page;
+    display: grid;
+    grid-template-areas: 
+    "title title leaderboard"
+    "leftside map leaderboard"
+    "leftside map scorecard";
+}
+
+#title{
+    grid-area: title;
+}
+#leaderboard{
+    grid-area: leaderboard;
+}
+#leftside{
+    grid-area: leftside;
+}
+#map{
+    grid-area: map;
+}
+#scorecard{
+    grid-area: scorecard;
 }
 
 .holeScore {

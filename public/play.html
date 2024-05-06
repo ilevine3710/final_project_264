@@ -28,14 +28,52 @@
     <a class = "redirects" id = "Stats" href="/Stats">Stats</a>
   </div>
   <div id="page">
-    <h1>South Mountain</h1>
-    <div id="holeNav">
-        <button id="prevHole">⮜</button>
-        <div id="holeNumber">Hole 1</div>
-        <button id="nextHole">⮞</button>
+    <div id="title">South Mountain</div>
+    <div id="leftside">
+        <div id="holeNav">
+            <button id="prevHole">⮜</button>
+            <div id="holeNumber">Hole 1</div>
+            <button id="nextHole">⮞</button>
+        </div>
+        <div id="holeScores"></div>
     </div>
-    <div id="holeScores">
-
+    <div id = map>
+        <iframe src="https://www.google.com/maps/d/u/0/embed?mid=1JmStA0uMW9vcS6OWsihFF4o6BdM4CiE&ehbc=2E312F&noprof=1"></iframe>
+    </div>
+    <div id="leaderboard">
+        <div>
+            <div class="rank">👑-1</div>
+            <div>Mark Latvakoski</div>
+        </div>
+        <div>
+            <div class="rank">+1</div>
+            <div>Jeremy Cohen</div>
+        </div>
+        <div>
+            <div class="rank">+2</div>
+            <div>Isaac Levine</div>
+        </div>
+    </div>
+    <div id="scorecard">
+        <table id="scoretable" style="border: 5px solid #411f31;">
+            <thead style="border: 3px solid #411f31;">
+              <tr>
+                <!-- <th style="width:1em" /> -->
+                <th style="width:150px">Name</th>
+                <th style="width:30px">1</th>
+                <th style="width:30px">2</th>
+                <th style="width:30px">3</th>
+                <th style="width:30px">4</th>
+                <th style="width:30px">5</th>
+                <th style="width:30px">6</th>
+                <th style="width:30px">7</th>
+                <th style="width:30px">8</th>
+                <th style="width:30px">9</th>
+              </tr>
+            </thead>
+            <tbody id="scoreRows">
+            </tbody>
+        </table>
     </div>
   </div>
 </body>

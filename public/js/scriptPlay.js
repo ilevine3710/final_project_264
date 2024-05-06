@@ -90,7 +90,7 @@ function updateLeaderboard() {
     for (let i = 0; i < gameSetting.people.length; i++) {
         overall = 0;
         e = 0;
-        for (let j = 0; j < hole; j++) {
+        for (let j = 0; j < hole-1; j++) {
             overall = overall + scores[i][j];
             e = e + pars[j];
         }
@@ -114,6 +114,12 @@ function updateLeaderboard() {
     $("#leaderboard").html(leaderboardH);
 }
 
+function endgame() {
+    let leaderboardH = $('#leaderboard').html();
+    let scorecardH = $('#scorecard').html();
+    $("#page").html(leaderboardH+scorecardH);
+}
+
 function increment(step) {
     tempHoleScores = [];
     $(".holeScore").each(function() {
@@ -123,23 +129,25 @@ function increment(step) {
     for (let i = 0; i < gameSetting.people.length; i++) {
         scores[i][hole-1] = tempHoleScores[i];
     }
-    if(hole === 18 && step > 0){
-        return; //come bak to this
-    }
     if(hole === 1 && step < 0){
         return //Tozshey
     }
     $("#holeScores").html("");
     hole = hole + step;
     if(hole > highest){ highest = hole; }
+    updateScorecard();
+    updateLeaderboard();
+    if(hole === 19 && step > 0){
+        endgame();
+        return; //come bak to this
+    }
     for (let i = 0; i < gameSetting.people.length; i++) {
         old = $("#holeScores").html();
         $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
         <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${scores[i][hole-1]}" min="1" max="9"></div>`);
     }
     $("#holeNumber").html(`Hole ${hole}`);
-    updateScorecard();
-    updateLeaderboard();
+    
 }
 
 $("#nextHole").click(() => {

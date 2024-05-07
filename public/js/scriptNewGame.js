@@ -1,12 +1,15 @@
 // changes map and button at bottom..
 $("#courses").change(function() {
     course = $("#courses").val();
-    if(course === "Moore"){
+    if(course === "Moore Township"){
         //google my maps iframe
         $("#map").html(`<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1JmStA0uMW9vcS6OWsihFF4o6BdM4CiE&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>`)
     }
-    if(course === "South Mountain"){
+    else if(course === "South Mountain"){
         $("#map").html(`<iframe src="https://www.google.com/maps/d/u/0/embed?mid=14Egs3xzIrjR-rfE7y-bx5oc50x_xfpc&ehbc=2E312F&noprof=1" width="640" height="480"></iframe>`)
+    }
+    else{
+        $("#map").html(`<div width="640" height="480"></div>`);
     }
     $("#playgame").html(`Frolf ${course}`);
 });
@@ -124,6 +127,32 @@ function initPlayers() {
     );
 }
 
+function initCourses() {
+    //loads the players into the drop down
+    $.ajax(
+        "/loadCourses",
+        {
+          type: "GET",
+          processData: true,
+          dataType: "json",
+          success: function (courses) {
+            coursesOptions = `<option value="select">Select Course</option>`;
+            for (let i = 0; i < courses.length; i++) {
+                coursesOptions = coursesOptions + `<option value="${courses[i].COURSE}">${courses[i].COURSE}</option>`;   
+            }
+            coursesOptions = coursesOptions + `<option value="other">Other...</option>`;
+            $("#courses").html(coursesOptions);
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            alert("Error: " + jqXHR.responseText);
+            alert("Error: " + textStatus);
+            alert("Error: " + errorThrown);
+          }
+        }
+    );
+}
+
 $(()=>{
     initPlayers();
+    initCourses();
 });

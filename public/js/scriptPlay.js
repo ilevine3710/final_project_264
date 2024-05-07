@@ -38,7 +38,6 @@ function getCourse(){
 
 function initpage() {
     //see
-    //$("#state").html("course: " + gameSetting.course + "\nPlayers: " + gameSetting.people);
     getCourse().then(function(got){
         pars = got;
         for (let i = 0; i < pars.length; i++) {
@@ -50,6 +49,15 @@ function initpage() {
             $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
             <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${pars[hole]}" min="1" max="9"></div>`);
             //console.log(pars[hole]);
+        }
+        if(gameSetting.course === "South Mountain"){
+            $("#map").html(`<iframe src="https://www.google.com/maps/d/u/0/embed?mid=14Egs3xzIrjR-rfE7y-bx5oc50x_xfpc&ehbc=2E312F&noprof=1"></iframe>`)
+        }
+        else if(gameSetting.course === "Moore Township"){
+            $("#map").html(`<iframe src="https://www.google.com/maps/d/u/0/embed?mid=1JmStA0uMW9vcS6OWsihFF4o6BdM4CiE&ehbc=2E312F&noprof=1"></iframe>`)
+        }
+        else{
+            $("#map").html(`<div style="width: 540px; height:400px;"></div>`);
         }
     });
 }

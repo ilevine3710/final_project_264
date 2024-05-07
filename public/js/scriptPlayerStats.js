@@ -484,7 +484,7 @@ function makeRoundArray(rounds) {
         junk1.push(rounds[i].SCORE12 - rounds[i].PAR12);
         junk2.push(rounds[i].SCORE12);
         junk1.push(rounds[i].SCORE13 - rounds[i].PAR13);
-        junk2.push(rounds[i].SCORE1);
+        junk2.push(rounds[i].SCORE13);
         junk1.push(rounds[i].SCORE14 - rounds[i].PAR14);
         junk2.push(rounds[i].SCORE14);
         junk1.push(rounds[i].SCORE15 - rounds[i].PAR15);
@@ -531,10 +531,12 @@ function makeChart1() {
     parColors = [];
     parBorders = [];
     data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    console.log("abba");
     scoreArray.forEach((round,index) => {
         for (let i = 0; i <= 17; i++) {
             data[i] += round[i] / scoreArray.length;
         }
+        console.log(round);
     });
     parArray.forEach((par, index) => { 
         if (index < 18) {

@@ -153,8 +153,7 @@ h5 {
     font-size: 23px;
 }
 img {
-    max-width: 200px;
-    margin: 5px;
+    max-width: 270px;
 }
 #container > div {
     margin: 15px;
@@ -179,15 +178,32 @@ img {
       'image1'
       'image2'
       'image3'
-      'image4'
-      'image5'
-      'image6';
+      'image4';
 }
 #dg {
     grid-area: dg;
 }
 #courses {
     grid-area: courses;
+}
+#titleImage {
+    margin-inline: auto;
+    max-width: fit-content;
+}
+#image4 {
+    display:block;
+    margin:auto;
+    vertical-align: bottom;
+}
+#image5 {
+    display:block;
+    margin:auto;
+    vertical-align: bottom;
+}
+#image6 {
+    display:block;
+    margin:auto;
+    vertical-align: bottom;
 }
 /* ==========================================================================
    Helper classes

@@ -8,6 +8,8 @@ let total = 0;
 let hole = 1;
 let highest = 1;
 
+let overallScores = [];
+
 function getCourse(){
     return new Promise(function(resolve,reject) {
         $.ajax(
@@ -47,7 +49,7 @@ function initpage() {
             old = $("#holeScores").html();
             $("#holeScores").html(old+`<div><label for="quantity${i}">${gameSetting.people[i]}:</label>
             <input type="number" class="holeScore" id="quantity${i}" name="quantity${i}" value="${pars[hole]}" min="1" max="9"></div>`);
-            console.log(pars[hole]);
+            //console.log(pars[hole]);
         }
     });
 }
@@ -100,7 +102,7 @@ function updateLeaderboard() {
     overallScores.sort(function(a, b) {
         return a.overall - b.overall;
     });
-    console.log(overallScores);
+    //console.log(overallScores);
     let leaderboardH = ``;
     for (let i = 0; i < overallScores.length; i++) {
         if(i === 0){
@@ -109,15 +111,17 @@ function updateLeaderboard() {
         else{
             leaderboardH = leaderboardH + `<div><div class="rank">${overallScores[i].overall}</div><div class="tag">${overallScores[i].player}</div></div>`;
         }
-        console.log(leaderboardH);
+        //console.log(leaderboardH);
     }
     $("#leaderboard").html(leaderboardH);
 }
 
 function endgame() {
-    let leaderboardH = $('#leaderboard').html();
-    let scorecardH = $('#scorecard').html();
-    $("#page").html(leaderboardH+scorecardH);
+    $("#map").html(`<div style="font-size: 25px;">Congratulations ${overallScores[0].player}!</div><br><img src="images/basket.png" style="height: 400px">`);
+    $("#leftside").html("");
+    $("#Quit").html("Save and Quit");
+
+
 }
 
 function increment(step) {
@@ -139,7 +143,7 @@ function increment(step) {
     updateLeaderboard();
     if(hole === 19 && step > 0){
         endgame();
-        return; //come bak to this
+        return; 
     }
     for (let i = 0; i < gameSetting.people.length; i++) {
         old = $("#holeScores").html();

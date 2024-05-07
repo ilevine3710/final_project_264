@@ -180,8 +180,8 @@ var chart2 = new Chart(ctx2, { // Scatter chart for scores through time
                 }
             },
             y: {
-                min: 50,
-                max: 80,
+                min: -5,
+                max: 30,
             }
         },
         animation: {
@@ -498,8 +498,7 @@ function makeRoundArray(rounds) {
         junk1.push(rounds[i].TOTALSCORE - rounds[i].TOTALPAR);
         junk2.push(rounds[i].TOTALSCORE);
         junk3.push(rounds[i].DATE);
-        junk3.push(rounds[i].TOTALSCORE);
-        junk3.push(rounds[i].TOTALPAR);
+        junk3.push(rounds[i].TOTALSCORE - rounds[i].TOTALPAR);
         roundsArray.push(junk1);
         scoreArray.push(junk2);
         scoreDateArray.push(junk3);

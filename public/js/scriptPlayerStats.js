@@ -180,8 +180,8 @@ var chart2 = new Chart(ctx2, { // Scatter chart for scores through time
                 }
             },
             y: {
-                min: 50,
-                max: 80,
+                min: -5,
+                max: 30,
             }
         },
         animation: {
@@ -484,7 +484,7 @@ function makeRoundArray(rounds) {
         junk1.push(rounds[i].SCORE12 - rounds[i].PAR12);
         junk2.push(rounds[i].SCORE12);
         junk1.push(rounds[i].SCORE13 - rounds[i].PAR13);
-        junk2.push(rounds[i].SCORE1);
+        junk2.push(rounds[i].SCORE13);
         junk1.push(rounds[i].SCORE14 - rounds[i].PAR14);
         junk2.push(rounds[i].SCORE14);
         junk1.push(rounds[i].SCORE15 - rounds[i].PAR15);
@@ -498,8 +498,7 @@ function makeRoundArray(rounds) {
         junk1.push(rounds[i].TOTALSCORE - rounds[i].TOTALPAR);
         junk2.push(rounds[i].TOTALSCORE);
         junk3.push(rounds[i].DATE);
-        junk3.push(rounds[i].TOTALSCORE);
-        junk3.push(rounds[i].TOTALPAR);
+        junk3.push(rounds[i].TOTALSCORE - rounds[i].TOTALPAR);
         roundsArray.push(junk1);
         scoreArray.push(junk2);
         scoreDateArray.push(junk3);
@@ -531,10 +530,12 @@ function makeChart1() {
     parColors = [];
     parBorders = [];
     data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    console.log("abba");
     scoreArray.forEach((round,index) => {
         for (let i = 0; i <= 17; i++) {
             data[i] += round[i] / scoreArray.length;
         }
+        console.log(round);
     });
     parArray.forEach((par, index) => { 
         if (index < 18) {

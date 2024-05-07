@@ -91,6 +91,14 @@
   /* ==========================================================================
      Author's custom styles
      ========================================================================== */
+  select, input {
+      color: #4D2D18;;
+      background-color: #4C6444;
+      border-color: #4D2D18;
+      border-width: 2px;
+      font-size: 20px;
+  }
+  
   body {
     font-family: "Chakra Petch", sans-serif;
     background-color: #CABA9C;

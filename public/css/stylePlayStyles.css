@@ -144,7 +144,7 @@ background-color: #8A6240; /* Darker shade of button color */
 }
 
 #qbar {
-    background-color: #4C6444;
+    background-color: #4C644400;
     height: 50px;
     display: flex;
     justify-content: flex-end;
@@ -157,14 +157,13 @@ background-color: #8A6240; /* Darker shade of button color */
 #Quit {
     margin-right: 100px;
     height: 35px;
-    margin-top: 8px;
+    border: none;
     font-size: 25px;
     color: #4D2D18;
     display: inline-block;
-    background-color: #4C6444; /* Button color */
+    background-color: #4C644400; /* Button color */
     text-decoration: none; /* Remove underline */
     border-radius: 5px; /* Rounded corners */
-    border: none; /* Remove default border */
     cursor: pointer; /* Show pointer on hover */
     transition: background-color 0.3s ease; /* Smooth transition */
 }
@@ -257,7 +256,9 @@ background-color: #8A6240; /* Darker shade of button color */
     font-size: 18px; /* adjust as needed */
     text-align: center; /* center-align the number */
     margin-right: 40px; /* adjust as needed to make space for the buttons */
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    background-color: #8A6240;
 }
   
 .holeScore::-webkit-inner-spin-button,
@@ -281,6 +282,8 @@ background-color: #8A6240; /* Darker shade of button color */
     align-items: flex-end; /* Align items to the right */
     margin-left: 10px;
     border: #4D2D18;
+    background-color: #4C6444;
+    border-radius: 20px;
     border-width: 2px;
     border-style: solid;
     -ms-overflow-style: none;  /* IE and Edge */

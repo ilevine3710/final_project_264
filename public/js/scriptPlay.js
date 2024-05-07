@@ -117,11 +117,9 @@ function updateLeaderboard() {
 }
 
 function endgame() {
-    $("#map").html(`<div style="font-size: 25px;">Congratulations ${overallScores[0].player}!</div><br><img src="images/basket.png" style="height: 400px">`);
+    $("#map").html(`<div style="font-size: 25px;">Congratulations ${overallScores[0].player}!</div><br><img src="images/basket.png" style="height: 350px">`);
     $("#leftside").html("");
     $("#Quit").html("Save and Quit");
-
-
 }
 
 function increment(step) {
